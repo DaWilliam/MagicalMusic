@@ -30,6 +30,13 @@ public class User {
 		
 	}
 
+	public void updateValues(String name, String password, byte[] image)
+	{
+		this.name = name;
+		this.password = password;
+		this.image = image;
+	}
+	
 	public int getId() {
 		return id;
 	}
