@@ -13,12 +13,16 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SongCardComponent
+    SongCardComponent,
+    RegistrationPageComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
