@@ -12,11 +12,19 @@ import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
+import { TabComponent } from './tab/tab.component';
+import { SearchComponent } from './search/search.component';
+import { RecommendedComponent } from './recommended/recommended.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SongCardComponent
+    SongCardComponent,
+    TabComponent,
+    SearchComponent,
+    RecommendedComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,
