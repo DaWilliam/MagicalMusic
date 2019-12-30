@@ -10,12 +10,14 @@ import {MatSelectModule, MatButtonModule, MatInputModule} from '@angular/materia
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
 import { TabComponent } from './tab/tab.component';
 import { SearchComponent } from './search/search.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatIconModule
   ],
   providers: [UserServiceService],
   bootstrap: [AppComponent]
