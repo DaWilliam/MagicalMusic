@@ -1,4 +1,4 @@
-package controllers;
+package pyramid.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,8 @@ public class UserController {
 	@PutMapping("/update/{id}")
 	public ResponseEntity<User> update(@RequestParam int id, @RequestParam String name, @RequestParam String password, @RequestParam String email, @RequestParam byte[] image)
 	{
-		User updateUser = new User(id, name, password, email, image);
+		User updatedUser = new User(id, name, password, email, image);
+		userJpa.save(updatedUser);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
 }
