@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\William\GitProjects\repository\MagicalMusic\MagicalMusic\.metadata\.plugins\org.eclipse.jdt.core
+1268988418.index
