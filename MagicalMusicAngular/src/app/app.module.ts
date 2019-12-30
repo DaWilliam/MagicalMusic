@@ -28,7 +28,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     TabComponent,
     SearchComponent,
     RecommendedComponent,
-    FavoritesComponent
+    FavoritesComponent,
     SongCardComponent,
     RegistrationPageComponent,
     LoginPageComponent
