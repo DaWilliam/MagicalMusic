@@ -69,7 +69,7 @@ public class UserController {
 	}
 		
 	@PutMapping("/update/{id}")
-	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam String email, @RequestParam byte[] image)
+	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam byte[] image)
 	{
 		Optional<User> updatedUser = userJpa.findById(id);
 		if(updatedUser.isPresent())
