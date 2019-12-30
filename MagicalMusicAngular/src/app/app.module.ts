@@ -10,8 +10,10 @@ import {MatSelectModule, MatButtonModule, MatInputModule} from '@angular/materia
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { UserServiceService } from './user-service.service';
     ReactiveFormsModule,
     HttpClientModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatIconModule
   ],
   providers: [UserServiceService],
   bootstrap: [AppComponent]
