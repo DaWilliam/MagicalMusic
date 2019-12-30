@@ -21,7 +21,7 @@ public class ArtistController {
 
 
     //find artist
-    @GetMapping(value = "/{artist}", produces= "application/json")
+    @GetMapping(value = "/{artist}")
     public ResponseEntity<Artist> getArtist(@PathVariable String artist)
     {
 
@@ -39,7 +39,8 @@ public class ArtistController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+
         System.out.println(response);
 
         System.out.println(response.getClass());
