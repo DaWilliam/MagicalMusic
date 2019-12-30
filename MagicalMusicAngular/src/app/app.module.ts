@@ -17,6 +17,8 @@ import { TabComponent } from './tab/tab.component';
 import { SearchComponent } from './search/search.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 import { FavoritesComponent } from './favorites/favorites.component';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 
 @NgModule({
@@ -27,6 +29,9 @@ import { FavoritesComponent } from './favorites/favorites.component';
     SearchComponent,
     RecommendedComponent,
     FavoritesComponent
+    SongCardComponent,
+    RegistrationPageComponent,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
