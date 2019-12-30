@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.card-image
+{
+    height:200px;
+}
+
+.card-padding
+{
+    padding-left : 2px;
+    padding-right : 2px;
+}
+/*
+.mat-grid-tile .mat-figure {
+   justify-content: flex-start !important ;
+   align-items: flex-start !important;
+}
+*/

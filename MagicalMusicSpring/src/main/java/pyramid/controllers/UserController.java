@@ -67,13 +67,18 @@ public class UserController {
 		}
 		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
-	
-	
+		
 	@PutMapping("/update/{id}")
-	public ResponseEntity<User> update(@RequestParam int id, @RequestParam String name, @RequestParam String password, @RequestParam String email, @RequestParam byte[] image)
+	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam byte[] image)
 	{
-		User updatedUser = new User(id, name, password, email, image);
-		userJpa.save(updatedUser);
-		return new ResponseEntity<User>(HttpStatus.OK);
+		Optional<User> updatedUser = userJpa.findById(id);
+		if(updatedUser.isPresent())
+		{
+			User user = updatedUser.get();
+			user.updateValues(name, password, image);	//	No email b/c prompt says you cannot update email
+			userJpa.save(user);
+			return new ResponseEntity<User>(HttpStatus.OK);
+		}
+		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
 }
