@@ -1,3 +1,9 @@
 lf
 user: magicalbois
 password: pyramid123;
+
+
+Application name:	MagicalMusic
+API key:	c781cfdd6742edee32e9c8483f67daee
+Shared secret:	9191354e3cb3b1c62ad40d11fb4fd03c
+Registered to:	magicalbois
