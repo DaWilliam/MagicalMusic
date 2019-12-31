@@ -1,23 +1,14 @@
 package pyramid.controllers;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-
-import java.io.StringReader;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.Scanner;
+import pyramid.models.searchdata.Body;
+import pyramid.repositories.UserRepository;
 
 
 @CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
@@ -28,6 +19,7 @@ import java.util.Scanner;
 @RequestMapping("/artist")
 public class ArtistController {
 
+    UserRepository urepo;
     @Value("${api.key}")
     private String apiKey;
 
@@ -50,7 +42,6 @@ public class ArtistController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-<<<<<<< HEAD
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         String bodyJson = response.getBody().toString();
@@ -64,84 +55,8 @@ public class ArtistController {
         System.out.println("CONVERTED");
 
         return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
-=======
-        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
-
-//        Body artist1 = gson.fromJson(response.toString(), Body.class);
-
-/*---------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
--------------------------------------------START TESTING---------------------------------------------------
------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------*/
 
 
-
-
-        String inline = "";
-        try {
-            URL url1 = new URL("https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist + "&api_key=" +apiKey + "&format=json");
-
-            HttpURLConnection conn =(HttpURLConnection) url1.openConnection();
-
-            conn.setRequestMethod("GET");
-            conn.connect();
-
-
-            int responseCode = conn.getResponseCode();
-            if(responseCode != 200){
-                throw new RuntimeException("HttpRsponseCode: " + responseCode );
-            } else{
-                Scanner sc = new Scanner(url1.openStream());
-                while (sc.hasNext()) {
-                    inline += sc.nextLine();
-                }
-                System.out.println(inline);
-                sc.close();
-
-
-//                JSONParser parser = new JSONParser();
-//                JSONObject jobj = (JSONObject) parser.parse(inline);
-//
-//                System.out.println(jobj);
-
-
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        int i = inline.indexOf("name");
-        int j = inline.indexOf("mbid");
-//        System.out.println(inline.substring(i,j));
-
-
-
-
-/*---------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------
--------------------------------------------END TESTING-----------------------------------------------------
------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-//        System.out.println(response);
-//
-//        System.out.println(response.getClass());
-
-
-        return new ResponseEntity(inline.substring(i,j-2), HttpStatus.OK);
->>>>>>> master
     }
 
 
@@ -251,7 +166,5 @@ public class ArtistController {
         return new ResponseEntity(response.getBody(), HttpStatus.OK);
     }
 
-
-
-
+    
     }
