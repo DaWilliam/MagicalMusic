@@ -1,14 +1,18 @@
 package pyramid.controllers;
 
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
+import pyramid.models.Track;
 import pyramid.models.searchdata.Body;
-import pyramid.repositories.UserRepository;
+import pyramid.repositories.TrackRepository;
+
+import java.util.List;
 
 
 @CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
@@ -19,7 +23,9 @@ import pyramid.repositories.UserRepository;
 @RequestMapping("/artist")
 public class ArtistController {
 
-    UserRepository urepo;
+    @Autowired
+    TrackRepository tr;
+
     @Value("${api.key}")
     private String apiKey;
 
@@ -44,7 +50,7 @@ public class ArtistController {
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        String bodyJson = response.getBody().toString();
+        String bodyJson = response.getBody();
         
         System.out.println(bodyJson);
         
@@ -166,5 +172,49 @@ public class ArtistController {
         return new ResponseEntity(response.getBody(), HttpStatus.OK);
     }
 
-    
+    // add track
+    @GetMapping(value = "/add")
+    public ResponseEntity<Track> addTrack(@RequestParam Track track){
+
+        tr.save(track);
+        return new ResponseEntity<Track>(HttpStatus.OK);
     }
+
+    // find track by id
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Track> getTrack(@PathVariable int id){
+
+
+        if(tr.existsById(id))
+        {
+            tr.findById(id);
+            return new ResponseEntity<Track>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    }
+
+
+    //find all tracks
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Track>> getTracks()
+    {
+        List<Track> allTracks = tr.findAll();
+        return new ResponseEntity<List<Track>>(allTracks, HttpStatus.OK);
+    }
+
+
+    //delete track
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Track> delete(@PathVariable int id)
+    {
+        if(tr.existsById(id))
+        {
+            tr.deleteById(id);
+            return new ResponseEntity<Track>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    }
+
+
+}

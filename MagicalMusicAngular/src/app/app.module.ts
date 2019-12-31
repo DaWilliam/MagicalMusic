@@ -18,6 +18,7 @@ import { RecommendedComponent } from './recommended/recommended.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import {TrackserviceService} from './trackservice.service';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
     MatGridListModule,
     MatIconModule
   ],
-  providers: [UserServiceService],
+  providers: [UserServiceService, TrackserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

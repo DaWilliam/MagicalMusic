@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class TopTracks {
 	
-	public Track[] track;
+	public TrackData[] track;
 	
 	@SerializedName("@attr")
 	public ArtistPage attr;

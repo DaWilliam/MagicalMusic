@@ -1,13 +1,11 @@
 package pyramid.models.searchdata;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
-public class Track {
-	
+
+public class TrackData {
+
+
 	public String name;
 	public int playcount;
 	public int listeners;
