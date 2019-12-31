@@ -5,7 +5,7 @@ public class Artist {
     private String name;
     private int playCount;
 
-    public Artist(int id, String name, int playcount) {
+    public Artist(int id, String name, int playCount) {
         this.id = id;
         this.name = name;
         this.playCount = playCount;
