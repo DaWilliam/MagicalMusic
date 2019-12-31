@@ -1,11 +1,13 @@
 package pyramid.controllers;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
+import pyramid.models.searchdata.Body;
 
 
 @CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
@@ -35,18 +37,21 @@ public class ArtistController {
 
         String url = "https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist + "&api_key=" +apiKey + "&format=json" ;
 
-
+        Gson gson = new Gson();
 
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+
+        Body artist1 = gson.fromJson(response.toString(), Body.class);
+
 
         System.out.println(response);
 
         System.out.println(response.getClass());
 
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(response.getBody(), HttpStatus.OK);
     }
 
 
@@ -75,7 +80,7 @@ public class ArtistController {
         System.out.println(response.getClass());
 
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(response.getBody(), HttpStatus.OK);
     }
 
     //find song with artist
@@ -104,7 +109,7 @@ public class ArtistController {
         ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
         System.out.println(response);
 
-        return new ResponseEntity(response,HttpStatus.OK);
+        return new ResponseEntity(response.getBody(),HttpStatus.OK);
     }
 
 }
