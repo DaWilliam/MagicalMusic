@@ -11,6 +11,11 @@ public class Artist {
         this.playCount = playCount;
     }
 
+    public Artist()
+    {
+    	
+    }
+    
     public int getId() {
         return id;
     }
