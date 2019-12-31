@@ -1,6 +1,9 @@
 package pyramid.models.searchdata;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Body {
 	
-	TopTracks toptracks;
+	public TopTracks toptracks;
+		
 }

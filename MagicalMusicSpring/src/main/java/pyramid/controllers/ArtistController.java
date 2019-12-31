@@ -1,6 +1,10 @@
 package pyramid.controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
+import java.io.StringReader;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +45,19 @@ public class ArtistController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        Body artist1 = gson.fromJson(response.toString(), Body.class);
+        String bodyJson = response.getBody().toString();
+        
+        System.out.println(bodyJson);
+        
+        Body body = gson.fromJson(bodyJson, Body.class);
+        Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
+        
+        //System.out.println(response.getClass());
+        System.out.println("CONVERTED");
 
-
-        System.out.println(response);
-
-        System.out.println(response.getClass());
-
-
-        return new ResponseEntity(response.getBody(), HttpStatus.OK);
+        return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
     }
 
 

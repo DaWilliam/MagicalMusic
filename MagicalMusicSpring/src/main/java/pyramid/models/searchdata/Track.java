@@ -1,5 +1,9 @@
 package pyramid.models.searchdata;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Track {
@@ -11,7 +15,7 @@ public class Track {
 	public String url;
 	public int streamable;
 	
-	public Artist artist;
+	public ArtistData artist;
 	public Image[] image;
 	
 	@SerializedName("@attr")
