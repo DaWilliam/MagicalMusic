@@ -7,7 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
-import pyramid.models.searchdata.Body;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.Scanner;
 
 
 @CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
@@ -24,8 +30,7 @@ public class ArtistController {
 
     //find artist
     @GetMapping(value = "/{artist}")
-    public ResponseEntity<Artist> getArtist(@PathVariable String artist)
-    {
+    public ResponseEntity<Artist> getArtist(@PathVariable String artist) {
 
         if(artist.isEmpty()){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -43,15 +48,80 @@ public class ArtistController {
 
         ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
 
-        Body artist1 = gson.fromJson(response.toString(), Body.class);
+//        Body artist1 = gson.fromJson(response.toString(), Body.class);
+
+/*---------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+-------------------------------------------START TESTING---------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------*/
 
 
-        System.out.println(response);
-
-        System.out.println(response.getClass());
 
 
-        return new ResponseEntity(response.getBody(), HttpStatus.OK);
+        String inline = "";
+        try {
+            URL url1 = new URL("https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist + "&api_key=" +apiKey + "&format=json");
+
+            HttpURLConnection conn =(HttpURLConnection) url1.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+
+            int responseCode = conn.getResponseCode();
+            if(responseCode != 200){
+                throw new RuntimeException("HttpRsponseCode: " + responseCode );
+            } else{
+                Scanner sc = new Scanner(url1.openStream());
+                while (sc.hasNext()) {
+                    inline += sc.nextLine();
+                }
+                System.out.println(inline);
+                sc.close();
+
+
+//                JSONParser parser = new JSONParser();
+//                JSONObject jobj = (JSONObject) parser.parse(inline);
+//
+//                System.out.println(jobj);
+
+
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        int i = inline.indexOf("name");
+        int j = inline.indexOf("mbid");
+//        System.out.println(inline.substring(i,j));
+
+
+
+
+/*---------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+-------------------------------------------END TESTING-----------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+//        System.out.println(response);
+//
+//        System.out.println(response.getClass());
+
+
+        return new ResponseEntity(inline.substring(i,j-2), HttpStatus.OK);
     }
 
 
@@ -112,4 +182,56 @@ public class ArtistController {
         return new ResponseEntity(response.getBody(),HttpStatus.OK);
     }
 
-}
+
+        //find geo top artist
+        @GetMapping(value = "/{geo}/artist")
+        public ResponseEntity<Artist> getTopArtist(@PathVariable String geo) {
+
+            if(geo.isEmpty()){
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+
+            if(geo.contains(" ")){
+                geo.replaceAll(" ", "+");
+            }
+
+            String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
+
+            Gson gson = new Gson();
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+
+
+            return new ResponseEntity(response.getBody(), HttpStatus.OK);
+        }
+
+
+    //find geo top tracks
+    @GetMapping(value = "/{geo}/tracks")
+    public ResponseEntity<Artist> getTopTracks(@PathVariable String geo) {
+
+        if(geo.isEmpty()){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        if(geo.contains(" ")){
+            geo.replaceAll(" ", "+");
+        }
+
+        String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettoptracks&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
+        Gson gson = new Gson();
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+
+
+        return new ResponseEntity(response.getBody(), HttpStatus.OK);
+    }
+
+
+
+
+    }
