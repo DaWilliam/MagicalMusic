@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { TrackserviceService } from '../trackservice.service';
+import { Track } from '../track';
 
 @Component({
   selector: 'app-song-card',
@@ -6,19 +9,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./song-card.component.css']
 })
 export class SongCardComponent implements OnInit {
-
+  //  FormGroup Did You Know: 
+  //    Value of data/favoriteForm is the variable names of the HTML page
+  
   song : string;
   artist : string;
-  image : HTMLImageElement;
-
-  constructor() { 
+  image : string;
+    
+  constructor(private sTrack : TrackserviceService) { 
     //this.song = "This is the longest Song-Name You have ever seen";
-    this.song = "Song-Name";
-    this.artist = "Artist-Name";
+    //this.song = "Song-Name";
+    //this.artist = "Artist-Name";    
   }
 
   ngOnInit() {
 
   }
 
+  addFavorite() {        
+      var track = new Track();
+      track.songName = "The William Song";
+      track.artistName = "William";
+      track.image = "YOUR IMAGE GOES HERE";
+
+      this.sTrack.addTrack(track).subscribe(
+        data => {                    
+          // track.songName = data.songName;
+          // track.artistName = data.artistName;
+          // track.image = data.image;
+          console.log("ADDED SONG");
+        }, error => {
+          console.log("WE COULDN'T FAVORITE YOUR SONG FOOL");
+        }
+      )
+  }
 }

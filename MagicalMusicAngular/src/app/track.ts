@@ -1,7 +1,7 @@
 
 export class Track {
 
-  id: number
+   id: number
    songName: string;
    artistName: string;
    image: string;

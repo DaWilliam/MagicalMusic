@@ -1,3 +1,5 @@
+
+
 <div class="container" style="height: 200px; align-content: flex-start; text-align: left;">
 <mat-card class = "a_song_card">
     <div class="d-flex justify-content-between align-items-center " style="height: 200px;">
@@ -10,10 +12,9 @@
         </mat-card-header>
 
         
-        <button style="width: 145px; height:145px; text-align: left;" mat-icon-button color="warn" aria-label="Favorite">
+        <button (click)="addFavorite()" style="width: 145px; height:145px; text-align: left;" mat-icon-button color="warn" aria-label="Favorite">
             <mat-icon class="ml-4" style="font-size: 100px;">favorite</mat-icon>
         </button>
     </div>
 </mat-card>
-
 

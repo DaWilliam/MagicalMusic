@@ -15,10 +15,8 @@ import pyramid.repositories.TrackRepository;
 import java.util.List;
 
 
-@CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
+@CrossOrigin(origins = "http://localhost:4200")	//	Should be the location that the angular server is hosted on
 @RestController    //	This is a Web Service
-
-
 //https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=ice+nine+kills&api_key=c781cfdd6742edee32e9c8483f67daee&format=json
 @RequestMapping("/artist")
 public class ArtistController {
@@ -175,7 +173,9 @@ public class ArtistController {
     // add track
     @GetMapping(value = "/add")
     public ResponseEntity<Track> addTrack(@RequestParam Track track){
-
+    	System.out.println("Added Track from Spring");
+    	track.id = (int)tr.count() + 1;
+    	
         tr.save(track);
         return new ResponseEntity<Track>(HttpStatus.OK);
     }

@@ -13,6 +13,7 @@ export class UserServiceService {
   getresult(){
     return this.httpClient.get<Array<User>>('http://localhost:8088/user/getAll');
   }
+  
   addUser(user:User)  {
     return this.httpClient.post<User>('http://localhost:8088/user/add', user);
   }
