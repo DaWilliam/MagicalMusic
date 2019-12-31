@@ -69,7 +69,7 @@ public class ArtistController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
         System.out.println(response);
 
         System.out.println(response.getClass());
