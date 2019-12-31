@@ -1,20 +1,23 @@
-<form>
+<form [formGroup]='loginForm'>
     <div class="d-flex flex-column justify-content-center align-items-center" style="text-align: center; height: 500px">    
         <h1 class="p-4" style="text-align: center;">Login</h1>    
+
         <div class="w-100" style="align-content: center;">
-            <mat-form-field style="width:500px; " >
-                <input style="width:500px" matInput placeholder="Username"/>
+            <span>Username: </span>
+            <mat-form-field style="width:300px; border-bottom: black solid 1px;" >
+                <input style="width:300px" matInput [formControl]='username'/>
+            </mat-form-field>
+        </div>
+
+        <div class="w-100  m-2" style="align-content: center;">
+            <span>Password: </span>
+            <mat-form-field style="width:300px; border-bottom: black solid 1px;">
+                <input matInput [formControl]='password'/>
             </mat-form-field>
         </div>
 
         <div class="w-100" style="align-content: center;">
-            <mat-form-field style="width:500px;">
-                <input matInput placeholder="Password"/>
-            </mat-form-field>
-        </div>
-
-        <div class="w-100" style="align-content: center;">
-            <button mat-stroked-button color="primary" style="width:200px;">Login</button>
+            <button (click)="login()" mat-stroked-button color="primary" style="width:200px;">Login</button>
         </div>
     </div>
 </form>

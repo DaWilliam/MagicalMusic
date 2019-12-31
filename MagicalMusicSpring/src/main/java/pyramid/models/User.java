@@ -14,9 +14,9 @@ public class User {
 	String name;
 	String password;
 	String email;	
-	byte[] image;
+	String image;
 	
-	public User(int id, String name, String password, String email, byte[] image) {
+	public User(int id, String name, String password, String email, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -30,7 +30,7 @@ public class User {
 		
 	}
 
-	public void updateValues(String name, String password, byte[] image)
+	public void updateValues(String name, String password, String image)
 	{
 		this.name = name;
 		this.password = password;
@@ -69,11 +69,11 @@ public class User {
 		this.email = email;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 		

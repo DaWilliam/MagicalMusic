@@ -4,6 +4,6 @@ export class User {
     name : string;
     password : string;
     email : string;
-    image : HTMLImageElement;
+    image : string;
     
 }

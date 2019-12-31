@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
 import pyramid.models.Track;
+import pyramid.models.User;
 import pyramid.models.searchdata.Body;
 import pyramid.repositories.TrackRepository;
 
@@ -171,8 +172,8 @@ public class ArtistController {
     }
 
     // add track
-    @GetMapping(value = "/add")
-    public ResponseEntity<Track> addTrack(@RequestParam Track track){
+    @PostMapping(value = "/add")
+    public ResponseEntity<Track> addTrack(@RequestBody Track track){
     	System.out.println("Added Track from Spring");
     	track.id = (int)tr.count() + 1;
     	
@@ -194,7 +195,7 @@ public class ArtistController {
         return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
     }
 
-
+    
     //find all tracks
     @GetMapping("/getAll")
     public ResponseEntity<List<Track>> getTracks()

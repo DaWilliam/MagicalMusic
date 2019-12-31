@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import pyramid.models.Track;
 import pyramid.models.User;
 import pyramid.repositories.UserRepository;
 
 
-@CrossOrigin(origins ="localhost:4200")	//	Should be the location that the angular server is hosted on
+@CrossOrigin(origins ="http://localhost:4200")	//	Should be the location that the angular server is hosted on
 @RestController	//	This is a Web Service
 @RequestMapping("/users")
 public class UserController {
@@ -32,7 +33,7 @@ public class UserController {
 	UserRepository userJpa;
 	
 	@PostMapping("/add")	//	Short-hand for RequestMapping("/add", RequestMethod.POST)
-	public ResponseEntity<User> addUser(@RequestBody User user)
+	public ResponseEntity<User> addUser(@RequestBody User user)	//	@RequestBody takes all the info as an object. @RequestParam takes data as pieces
 	{
 		User savedUser = userJpa.save(user);
 		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
@@ -69,7 +70,7 @@ public class UserController {
 	}
 		
 	@PutMapping("/update/{id}")
-	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam byte[] image)
+	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam String image)
 	{
 		Optional<User> updatedUser = userJpa.findById(id);
 		if(updatedUser.isPresent())
@@ -81,4 +82,18 @@ public class UserController {
 		}
 		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
+	
+    // Login
+    @PostMapping(value = "/login")
+    public ResponseEntity<Track> getTrack(@RequestBody User user){
+
+    	if(user.getName().equals("Will") && user.getPassword().equals("isAwesome"))
+    	{
+    		System.out.println("DAMN WILL IS AWESOME");
+    		return new ResponseEntity<Track>(HttpStatus.OK);
+    	}
+    	
+    	System.out.println("YOU PUT THE WRONG INFO");
+        return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    }
 }
