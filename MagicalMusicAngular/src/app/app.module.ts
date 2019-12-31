@@ -13,7 +13,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
-import { TabComponent } from './tab/tab.component';
 import { SearchComponent } from './search/search.component';
 import { RecommendedComponent } from './recommended/recommended.component';
 import { FavoritesComponent } from './favorites/favorites.component';
@@ -25,7 +24,6 @@ import { LoginPageComponent } from './login-page/login-page.component';
   declarations: [
     AppComponent,
     SongCardComponent,
-    TabComponent,
     SearchComponent,
     RecommendedComponent,
     FavoritesComponent,
