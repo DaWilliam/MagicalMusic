@@ -181,7 +181,7 @@ public class ArtistController {
     }
 
     // find track by id
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/track/{id}")
     public ResponseEntity<Track> getTrack(@PathVariable int id){
 
 
