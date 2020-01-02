@@ -20,6 +20,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {TrackserviceService} from './trackservice.service';
+import { GlobalDataService } from './global-data.service';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import {TrackserviceService} from './trackservice.service';
     FavoritesComponent,
     SongCardComponent,
     RegistrationPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +51,7 @@ import {TrackserviceService} from './trackservice.service';
     MatRippleModule,
     MatCheckboxModule
   ],
-  providers: [UserServiceService, TrackserviceService],
+  providers: [UserServiceService, TrackserviceService, GlobalDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
