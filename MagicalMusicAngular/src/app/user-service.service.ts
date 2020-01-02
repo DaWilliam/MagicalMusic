@@ -26,4 +26,9 @@ export class UserServiceService {
     return this.httpClient.post<User>('http://localhost:8088/users/register', user);
   }
 
+  //  Should find the user by the ID and update it accordingly
+  update(user:User)  {
+    return this.httpClient.post<User>('http://localhost:8088/users/update' + user.id, { user });
+  }
+
 }

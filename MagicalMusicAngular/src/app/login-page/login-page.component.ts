@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { UserServiceService } from '../user-service.service';
 import { User } from '../user';
-import { PageDataComponent } from '../page-data/page-data.component';
 import { GlobalDataService } from '../global-data.service';
 
 @Component({

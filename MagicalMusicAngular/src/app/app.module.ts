@@ -21,6 +21,7 @@ import { RegistrationPageComponent } from './registration-page/registration-page
 import { LoginPageComponent } from './login-page/login-page.component';
 import {TrackserviceService} from './trackservice.service';
 import { GlobalDataService } from './global-data.service';
+import { EditUserPageComponent } from './edit-user-page/edit-user-page.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { GlobalDataService } from './global-data.service';
     SongCardComponent,
     RegistrationPageComponent,
     LoginPageComponent,
+    EditUserPageComponent,
   ],
   imports: [
     BrowserModule,
