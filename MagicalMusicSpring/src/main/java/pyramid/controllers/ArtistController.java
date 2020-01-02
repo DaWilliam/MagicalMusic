@@ -29,6 +29,7 @@ public class ArtistController {
     @Value("${api.key}")
     private String apiKey;
 
+    Gson gson = new Gson();
 
     //find artist
     @GetMapping(value = "/{artist}")
@@ -60,7 +61,14 @@ public class ArtistController {
         //System.out.println(response.getClass());
         System.out.println("CONVERTED");
 
-        return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Artist: " + body.toptracks.attr.artist + System.lineSeparator()
+                + " | Listeners: " + body.toptracks.attr.total);
+
+//        return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
+
+        return new ResponseEntity(stringBuilder, HttpStatus.OK);
 
 
     }
@@ -97,6 +105,9 @@ public class ArtistController {
         //Artist responseArtist = new Artist(0, "Will", 6);
 
 
+
+
+
         return new ResponseEntity(tracks, HttpStatus.OK);
     }
 
@@ -123,11 +134,28 @@ public class ArtistController {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
-        System.out.println(response);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        return new ResponseEntity(response.getBody(),HttpStatus.OK);
+        String bodyJson = response.getBody();
+
+        System.out.println(bodyJson);
+
+        Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
+//        TrackSearchData[] tracks = body.results.trackmatches.track;
+        Track track = new Track();
+        track.songName = body.results.trackmatches.track[0].name;
+
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Track: " + track.songName + System.lineSeparator()
+                + " | Artist: " + body.results.trackmatches.track[0].artist + System.lineSeparator()
+                + " | Listeners: " + body.results.trackmatches.track[0].listeners);
+
+
+//      return new ResponseEntity(track, HttpStatus.OK);
+        return new ResponseEntity(stringBuilder, HttpStatus.OK);
     }
+
 
 
         //find geo top artist
@@ -144,20 +172,34 @@ public class ArtistController {
 
             String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
 
-            Gson gson = new Gson();
 
             RestTemplate restTemplate = new RestTemplate();
 
-            ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
 
-            return new ResponseEntity(response.getBody(), HttpStatus.OK);
-        }
+            String bodyJson = response.getBody();
+
+            System.out.println(bodyJson);
+
+
+            
+
+            Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
+            Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
+
+            //System.out.println(response.getClass());
+            System.out.println("CONVERTED");
+
+
+        return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
+
+    }
 
 
     //find geo top tracks
     @GetMapping(value = "/{geo}/tracks")
-    public ResponseEntity<Artist> getTopTracks(@PathVariable String geo) {
+    public ResponseEntity<TrackSearchData[]> getTopTracks(@PathVariable String geo) {
 
         if(geo.isEmpty()){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -167,15 +209,23 @@ public class ArtistController {
             geo.replaceAll(" ", "+");
         }
 
-        String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettoptracks&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
         Gson gson = new Gson();
 
+        String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettoptracks&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        String bodyJson = response.getBody();
+
+        System.out.println(bodyJson);
+
+        Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
+        TrackSearchData[] tracks = body.topTracks.trackSearchData;
 
 
-        return new ResponseEntity(response.getBody(), HttpStatus.OK);
+        return new ResponseEntity(tracks, HttpStatus.OK);
+
     }
 
     // add track
