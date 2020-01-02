@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
 import pyramid.models.Track;
-import pyramid.models.User;
 import pyramid.models.searchdata.Body_Search_Artist;
+import pyramid.models.searchdata.Body_Search_Song;
 import pyramid.repositories.TrackRepository;
 
 import java.util.List;
@@ -67,9 +67,9 @@ public class ArtistController {
 
     //find all songs with same name
     @GetMapping(value = "/song/{song}", produces= "application/json")
-    public ResponseEntity<Artist> getSong(@PathVariable String song)
+    public ResponseEntity<Track> getSong(@PathVariable String song)
     {
-
+        System.out.println("HITTING SONG");
         if(song.isEmpty()){
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -80,17 +80,23 @@ public class ArtistController {
 
         String url ="https://ws.audioscrobbler.com/2.0/?method=track.search&track=" + song  + "&api_key=" +apiKey + "&format=json"  ;
 
-
+        Gson gson = new Gson();
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
-        System.out.println(response);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
-        System.out.println(response.getClass());
+        String bodyJson = response.getBody();
+
+        System.out.println(bodyJson);
+
+        Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
+        Track track = new Track();
+        track.songName = body.results.trackmatches.track[0].name;
+        //Artist responseArtist = new Artist(0, "Will", 6);
 
 
-        return new ResponseEntity(response.getBody(), HttpStatus.OK);
+        return new ResponseEntity(track, HttpStatus.OK);
     }
 
     //find song with artist
