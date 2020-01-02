@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -95,5 +96,25 @@ public class UserController {
     	
     	System.out.println("YOU PUT THE WRONG INFO");
         return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    }
+    
+    // Register
+    //@Query("SELECT u FROM users u WHERE u.email = ?2")
+    @PostMapping(value = "/register")
+    public ResponseEntity<Track> register(@RequestBody User user){
+    	
+    	List<User> queriedUsers = userJpa.findAllByEmail(user.getEmail());
+    	System.out.println("Count: " + queriedUsers.size());
+    	
+    	System.out.println("Database registering");
+    	
+    	if(userJpa.count() != 0)
+    	{
+    		System.out.println("Failed Registration");
+    		return new ResponseEntity<Track>(HttpStatus.CONFLICT);	//	Email already exists    		 
+    	}
+    	System.out.println("Succeeded Registration");
+    	userJpa.save(user);    	    	   
+        return new ResponseEntity<Track>(HttpStatus.OK);
     }
 }

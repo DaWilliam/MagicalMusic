@@ -13,24 +13,24 @@
     
     <div class="w-100" style="align-content: center;">
         <mat-form-field style="width:500px; " >
-            <input style="width:500px" matInput placeholder="Username"/>
+            <input style="width:500px" matInput placeholder="Username"  [(ngModel)]='username' name="username"/>
         </mat-form-field>
     </div>
 
     <div class="w-100" style="align-content: center;">
         <mat-form-field style="width:500px;">
-            <input matInput placeholder="Password"/>
+            <input matInput placeholder="Password" [(ngModel)]='password' name="password" />
         </mat-form-field>
     </div>
 
     <div class="w-100" style="align-content: center;">
         <mat-form-field style="width:500px;">
-            <input style="width:500px" matInput placeholder="Email"/>
+            <input style="width:500px" matInput placeholder="Email" [(ngModel)]='email' name="email"/>
         </mat-form-field>
     </div>
 
     <div class="w-100" style="align-content: center;">
-        <button mat-stroked-button color="primary" style="width:200px;">Register</button>
+        <button (click)="register()" mat-stroked-button color="primary" style="width:200px;">Register</button>
     </div>
 </div>
 </form>

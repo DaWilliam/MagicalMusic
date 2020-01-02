@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { User } from './user';
 
 @Injectable({
@@ -22,5 +22,8 @@ export class UserServiceService {
     return this.httpClient.post<User>('http://localhost:8088/users/login', user);
   }
 
+  register(user:User, email:string)  {
+    return this.httpClient.post<User>('http://localhost:8088/users/register', user);
+  }
 
 }
