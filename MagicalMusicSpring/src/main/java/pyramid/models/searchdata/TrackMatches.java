@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class TrackMatches {
 	
-	public TrackData[] track;
+	public TrackSearchData[] track;
 	
 	@SerializedName("@attr")
 	public Attribute attr;
