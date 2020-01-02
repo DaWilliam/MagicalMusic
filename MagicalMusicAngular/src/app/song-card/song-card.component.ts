@@ -18,8 +18,8 @@ export class SongCardComponent implements OnInit {
     
   constructor(private sTrack : TrackserviceService) { 
     //this.song = "This is the longest Song-Name You have ever seen";
-    //this.song = "Song-Name";
-    //this.artist = "Artist-Name";    
+    this.song = "Song-Name";
+    this.artist = "Artist-Name";    
   }
 
   ngOnInit() {

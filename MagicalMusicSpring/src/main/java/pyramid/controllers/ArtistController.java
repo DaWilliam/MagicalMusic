@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
 import pyramid.models.Track;
 import pyramid.models.User;
-import pyramid.models.searchdata.Body;
+import pyramid.models.searchdata.Body_Search_Artist;
 import pyramid.repositories.TrackRepository;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class ArtistController {
         
         System.out.println(bodyJson);
         
-        Body body = gson.fromJson(bodyJson, Body.class);
+        Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
         Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
         
         //System.out.println(response.getClass());
