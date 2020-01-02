@@ -32,19 +32,27 @@
 </mat-card> -->
 
 
-<div class="container-fluid" >
-<mat-card style="margin:2em; padding: 2em;">
-        <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image  src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
 
-        <mat-card-actions style="text-align: center;">
-            <button mat-button (click)="addFavorite()" style="width: 50px; height:50px; background-color:red; text-align: left;" mat-icon-button color="warn" aria-label="Favorite">
-                <mat-icon class="ml-4" style="font-size: 50px;">favorite</mat-icon>
-            </button>
-        </mat-card-actions>
-</mat-card>
-</div>
+
+<div class="container-fluid" >
+    <mat-card style="margin:2em; padding: 2em;">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Shiba Inu</mat-card-title>
+                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+            </mat-card-header>
+    
+            <img mat-card-image  src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    
+           
+    
+            <mat-card-actions style="text-align: center;">            
+                <div class="container-flex" style="text-align: center;">
+                    <button type="button" class="btn btn-danger button" data-toggle="button" aria-pressed="false" autocomplete="off">
+                        <mat-icon style="font-size: 50px; height: 50px; width: 50px;">favorite</mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+    </mat-card>
+    </div>
+    

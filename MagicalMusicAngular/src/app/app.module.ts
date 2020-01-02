@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SongCardComponent } from './song-card/song-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatSelectModule, MatButtonModule, MatInputModule} from '@angular/material';
+import {MatSelectModule, MatButtonModule, MatInputModule, MatCheckboxModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRippleModule} from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
 import { SearchComponent } from './search/search.component';
@@ -45,7 +46,9 @@ import {TrackserviceService} from './trackservice.service';
     HttpClientModule,
     MatCardModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    MatRippleModule,
+    MatCheckboxModule
   ],
   providers: [UserServiceService, TrackserviceService],
   bootstrap: [AppComponent]

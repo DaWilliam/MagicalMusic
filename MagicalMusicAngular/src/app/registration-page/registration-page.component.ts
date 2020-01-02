@@ -34,5 +34,4 @@ export class RegistrationPageComponent implements OnInit {
       }
     )
   }
-
 }
