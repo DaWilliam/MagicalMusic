@@ -11,6 +11,7 @@ import pyramid.models.Artist;
 import pyramid.models.Track;
 import pyramid.models.searchdata.Body_Search_Artist;
 import pyramid.models.searchdata.Body_Search_Song;
+import pyramid.models.searchdata.TrackSearchData;
 import pyramid.repositories.TrackRepository;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class ArtistController {
 
     //find all songs with same name
     @GetMapping(value = "/song/{song}", produces= "application/json")
-    public ResponseEntity<Track> getSong(@PathVariable String song)
+    public ResponseEntity<TrackSearchData[]> getSong(@PathVariable String song)
     {
         System.out.println("HITTING SONG");
         if(song.isEmpty()){
@@ -91,12 +92,12 @@ public class ArtistController {
         System.out.println(bodyJson);
 
         Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
-        Track track = new Track();
-        track.songName = body.results.trackmatches.track[0].name;
+        TrackSearchData[] tracks = body.results.trackmatches.track;
+        //track.songName = body.results.trackmatches.track[0].name;
         //Artist responseArtist = new Artist(0, "Will", 6);
 
 
-        return new ResponseEntity(track, HttpStatus.OK);
+        return new ResponseEntity(tracks, HttpStatus.OK);
     }
 
     //find song with artist
