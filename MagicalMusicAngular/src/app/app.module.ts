@@ -55,6 +55,6 @@ import { EditUserPageComponent } from './edit-user-page/edit-user-page.component
   ],
   providers: [UserServiceService, TrackserviceService, GlobalDataService],
   bootstrap: [AppComponent]
-  entryComponents: [ SongCardComponent ]
+  //entryComponents: [ SongCardComponent ]
 })
 export class AppModule { }

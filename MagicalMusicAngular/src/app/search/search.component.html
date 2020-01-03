@@ -17,3 +17,9 @@
         </div>
     </div>
 </form>
+
+<ul>
+    <li *ngFor="let song of tracks">
+      <app-song-card [song]="song.songName" [artist]="song.artistName"></app-song-card>
+    </li>
+  </ul>

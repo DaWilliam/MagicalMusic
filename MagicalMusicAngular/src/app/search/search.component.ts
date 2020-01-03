@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class SearchComponent implements OnInit {
   @ViewChild(InsertionDirective, {static: true}) songInsertion: InsertionDirective;
 
-  tracks : Observable<Object>;
+  tracks : any;
   //private componentRef: ComponentRef<any>;
   constructor(private Trackservice:TrackserviceService) {
 
