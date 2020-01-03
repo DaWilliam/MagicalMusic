@@ -17,8 +17,16 @@
         </div>
     </div>
 </form>
-{{songSearch}}
 
-<div class="container-fluid">
-    <app-song-card *ngFor="let song of tracks" [song]="song.songName" [artist]=song.artistName></app-song-card>
-</div>
+<mat-grid-list cols=4 style="margin-top: 100px;">
+    <mat-grid-tile *ngFor="let song of tracks" class="container-fluid" >
+        <app-song-card  [song]=song.songName [artist]=song.artistName [image]=song.image class="container-fluid" style="margin-top: 100px; margin-bottom: 100px; margin-left: 50px; margin-right: 50px;"></app-song-card>
+    </mat-grid-tile>
+</mat-grid-list>
+
+
+<!-- <div class="container-fluid">
+    <div class="row">
+        <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image></app-song-card>
+    </div>
+</div> -->

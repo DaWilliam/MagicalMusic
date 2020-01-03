@@ -109,6 +109,10 @@ public class ArtistController {
         	tracks[i] = new Track();
         	tracks[i].artistName = trackModelObj[i].artist;
         	tracks[i].songName = trackModelObj[i].name;
+        	
+        	//	If it has an image
+        	if(trackModelObj[i].image.length > 2)
+        		tracks[i].image = trackModelObj[i].image[2].text;
         }
         //track.songName = body.results.trackmatches.track[0].name;
         //Artist responseArtist = new Artist(0, "Will", 6);

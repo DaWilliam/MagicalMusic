@@ -11,7 +11,7 @@ public class Track {
     public int id;
     public String songName;
     public String artistName;
-    public String image;
+    public String image;    
     
     public Track()
     {

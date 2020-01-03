@@ -14,6 +14,7 @@ export class SongCardComponent implements OnInit {
   //    Value of data/favoriteForm is the variable names of the HTML page
   @Input() song : string;
   @Input() artist : string;
+  @Input() image : string;
   
   constructor(private sTrack : TrackserviceService) { 
     //this.song = "This is the longest Song-Name You have ever seen";

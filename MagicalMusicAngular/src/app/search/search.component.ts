@@ -27,9 +27,7 @@ export class SearchComponent implements OnInit {
     //this.loadComponent();
   }
 
-  onSearchClicked(evt: MouseEvent){
-    
-      
+  onSearchClicked(evt: MouseEvent){          
       this.Trackservice.findSong(this.songSearch).subscribe(
       (data : Track[]) => { 
         console.log("DataLen: " + data.length);
