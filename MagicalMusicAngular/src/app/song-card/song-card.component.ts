@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TrackserviceService } from '../trackservice.service';
 import { Track } from '../track';
-
+import { Song } from '../song';
 @Component({
   selector: 'app-song-card',
   templateUrl: './song-card.component.html',
   styleUrls: ['./song-card.component.css']
 })
+
 export class SongCardComponent implements OnInit {
   //  FormGroup Did You Know: 
   //    Value of data/favoriteForm is the variable names of the HTML page
+  @Input() song : string;
+  @Input() artist : string;
   
-  song : string;
-  artist : string;
-  image : string;
-    
   constructor(private sTrack : TrackserviceService) { 
     //this.song = "This is the longest Song-Name You have ever seen";
     this.song = "Song-Name";

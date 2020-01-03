@@ -19,6 +19,7 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {TrackserviceService} from './trackservice.service';
+import { SongCardModule } from './song-card/song-card.module';
 
 
 @NgModule({
@@ -45,9 +46,11 @@ import {TrackserviceService} from './trackservice.service';
     HttpClientModule,
     MatCardModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    SongCardModule
   ],
   providers: [UserServiceService, TrackserviceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ SongCardComponent ]
 })
 export class AppModule { }
