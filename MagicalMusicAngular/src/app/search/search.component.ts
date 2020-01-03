@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class SearchComponent implements OnInit {
   @ViewChild(InsertionDirective, {static: true}) songInsertion: InsertionDirective;
 
-  tracks : any;
+  tracks : Object[];
   //private componentRef: ComponentRef<any>;
   constructor(private Trackservice:TrackserviceService) {
 
@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit {
   }
 
   onSearchClicked(evt: MouseEvent){
-    this.tracks = this.Trackservice.findAllTrack();
+    this.Trackservice.findAllTrack().forEach(this.tracks.push);
   }
 
   // loadComponent(){
