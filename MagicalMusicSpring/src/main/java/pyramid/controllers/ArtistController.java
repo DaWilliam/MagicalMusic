@@ -158,7 +158,8 @@ public class ArtistController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Track: " + track.songName + System.lineSeparator()
                 + " | Artist: " + body.results.trackmatches.track[0].artist + System.lineSeparator()
-                + " | Listeners: " + body.results.trackmatches.track[0].listeners);
+                + " | Listeners: " + body.results.trackmatches.track[0].listeners
+                + " | ImageURL: " + body.results.trackmatches.track[0].image[0].text);
 
 
 //      return new ResponseEntity(track, HttpStatus.OK);
