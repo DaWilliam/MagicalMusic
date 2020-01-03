@@ -22,6 +22,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import {TrackserviceService} from './trackservice.service';
 import { GlobalDataService } from './global-data.service';
 import { EditUserPageComponent } from './edit-user-page/edit-user-page.component';
+import { SongsListComponent } from './songs-list/songs-list.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { EditUserPageComponent } from './edit-user-page/edit-user-page.component
     RegistrationPageComponent,
     LoginPageComponent,
     EditUserPageComponent,
+    SongsListComponent,
   ],
   imports: [
     BrowserModule,

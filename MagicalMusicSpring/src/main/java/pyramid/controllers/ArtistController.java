@@ -104,10 +104,6 @@ public class ArtistController {
         //track.songName = body.results.trackmatches.track[0].name;
         //Artist responseArtist = new Artist(0, "Will", 6);
 
-
-
-
-
         return new ResponseEntity(tracks, HttpStatus.OK);
     }
 

@@ -19,9 +19,12 @@ export class SongCardComponent implements OnInit {
     //this.song = "This is the longest Song-Name You have ever seen";
     this.song = "Song-Name";
     this.artist = "Artist-Name";    
+    console.log("SONG: " + this.song);
   }
 
   ngOnInit() {
+    console.log("SONG2: " + this.song);
+    
 
   }
 
