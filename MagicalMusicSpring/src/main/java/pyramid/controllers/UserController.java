@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -69,14 +70,14 @@ public class UserController {
 		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
 		
-	@PutMapping("/update/{id}")
-	public ResponseEntity<User> update(@PathVariable int id, @RequestParam String name, @RequestParam String password, @RequestParam String image)
+	@PutMapping("/update")
+	public ResponseEntity<User> update(@RequestBody User userIn)
 	{
-		Optional<User> updatedUser = userJpa.findById(id);
+		Optional<User> updatedUser = userJpa.findById(userIn.getId());
 		if(updatedUser.isPresent())
 		{
 			User user = updatedUser.get();
-			user.updateValues(name, password, image);	//	No email b/c prompt says you cannot update email
+			user.updateValues(userIn.getName(), userIn.getPassword(), userIn.getImage());	//	No email b/c prompt says you cannot update email
 			userJpa.save(user);
 			return new ResponseEntity<User>(HttpStatus.OK);
 		}
@@ -95,5 +96,25 @@ public class UserController {
     	
     	System.out.println("YOU PUT THE WRONG INFO");
         return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    }
+    
+    // Register
+    //@Query("SELECT u FROM users u WHERE u.email = ?2")
+    @PostMapping(value = "/register")
+    public ResponseEntity<Track> register(@RequestBody User user){
+    	
+    	List<User> queriedUsers = userJpa.findAllByEmail(user.getEmail());
+    	System.out.println("Count: " + queriedUsers.size());
+    	
+    	System.out.println("Database registering");
+    	
+    	if(userJpa.count() != 0)
+    	{
+    		System.out.println("Failed Registration");
+    		return new ResponseEntity<Track>(HttpStatus.CONFLICT);	//	Email already exists    		 
+    	}
+    	System.out.println("Succeeded Registration");
+    	userJpa.save(user);    	    	   
+        return new ResponseEntity<Track>(HttpStatus.OK);
     }
 }

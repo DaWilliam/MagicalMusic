@@ -6,11 +6,12 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SongCardComponent } from './song-card/song-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatSelectModule, MatButtonModule, MatInputModule} from '@angular/material';
+import {MatSelectModule, MatButtonModule, MatInputModule, MatCheckboxModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatRippleModule} from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
 import { UserServiceService } from './user-service.service';
 import { SearchComponent } from './search/search.component';
@@ -19,7 +20,8 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { RegistrationPageComponent } from './registration-page/registration-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {TrackserviceService} from './trackservice.service';
-import { SongCardModule } from './song-card/song-card.module';
+import { GlobalDataService } from './global-data.service';
+import { EditUserPageComponent } from './edit-user-page/edit-user-page.component';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { SongCardModule } from './song-card/song-card.module';
     FavoritesComponent,
     SongCardComponent,
     RegistrationPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    EditUserPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,10 +50,11 @@ import { SongCardModule } from './song-card/song-card.module';
     MatCardModule,
     MatGridListModule,
     MatIconModule,
-    SongCardModule
+    MatRippleModule,
+    MatCheckboxModule
   ],
-  providers: [UserServiceService, TrackserviceService],
-  bootstrap: [AppComponent],
+  providers: [UserServiceService, TrackserviceService, GlobalDataService],
+  bootstrap: [AppComponent]
   entryComponents: [ SongCardComponent ]
 })
 export class AppModule { }

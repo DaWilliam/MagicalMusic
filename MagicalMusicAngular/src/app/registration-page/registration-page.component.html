@@ -2,35 +2,36 @@
 <h1 class="p-4" style="text-align: center;">Registration</h1>
 <form>
 <div class="d-flex flex-column justify-content-center align-items-center" style="text-align: center; height: 500px">    
-    
-    
 
-    <div class="w-100" style="align-content: center;">
+    <div class="w-100  m-2" style="align-content: center; ">
         <input type="image" 
                 src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTY4MzU0NDMzMjc5NzMxNjcw/julian-castro-sergio-floresbloomberg-via-getty-images-square.jpg" 
                 class="rounded-circle" alt="Image" />
     </div>
     
-    <div class="w-100" style="align-content: center;">
-        <mat-form-field style="width:500px; " >
-            <input style="width:500px" matInput placeholder="Username"/>
+    <div class="w-100  m-2" style="align-content: center; text-align: center; width:500px; padding-left: 120px;">
+        <span>Username: </span>
+        <mat-form-field style="width:500px; text-align: left;" >
+            <input style="width:500px" matInput [(ngModel)]='username' name="username" style="width:300px; border-bottom: black solid 1px;"/>
         </mat-form-field>
     </div>
 
-    <div class="w-100" style="align-content: center;">
+    <div class="w-100  m-2" style="align-content: center; text-align: center; padding-left: 120px;">
+        <span>Password: </span>
         <mat-form-field style="width:500px;">
-            <input matInput placeholder="Password"/>
+            <input matInput [(ngModel)]='password' name="password" style="width:300px; border-bottom: black solid 1px;"/>
         </mat-form-field>
     </div>
 
-    <div class="w-100" style="align-content: center;">
+    <div class="w-100  m-2" style="align-content: center; text-align: center; padding-left: 150px;">
+        <span>Email: </span>
         <mat-form-field style="width:500px;">
-            <input style="width:500px" matInput placeholder="Email"/>
+            <input style="width:500px" matInput [(ngModel)]='email' name="email" style="width:300px; border-bottom: black solid 1px;"/>
         </mat-form-field>
     </div>
 
-    <div class="w-100" style="align-content: center;">
-        <button mat-stroked-button color="primary" style="width:200px;">Register</button>
+    <div class="w-100  m-2" style="align-content: left; text-align: center;">
+        <button (click)="register()" mat-stroked-button color="primary" style="width:200px;">Register</button>
     </div>
 </div>
 </form>
