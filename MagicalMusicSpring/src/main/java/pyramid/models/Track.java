@@ -12,6 +12,19 @@ public class Track {
     public String songName;
     public String artistName;
     public String image;
+    
+    public Track()
+    {
+    	
+    }
+    
+	public Track(int id, String songName, String artistName, String image) {
+		super();
+		this.id = id;
+		this.songName = songName;
+		this.artistName = artistName;
+		this.image = image;
+	}
 
 
 }

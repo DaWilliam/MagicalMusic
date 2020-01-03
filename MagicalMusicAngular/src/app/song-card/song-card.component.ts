@@ -46,9 +46,6 @@ export class SongCardComponent implements OnInit {
       )
   }
 
-
-
-  
   centered = false;
   disabled = false;
   unbounded = false;

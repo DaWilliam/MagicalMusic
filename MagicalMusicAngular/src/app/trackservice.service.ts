@@ -14,7 +14,12 @@ export class TrackserviceService {
   addTrack(track: Track)  {
     return this.httpClient.post<Track>('http://localhost:8088/artist/add', track);
   }
-  findAllTrack(){
-    return this.httpClient.get('http://localhost:8088/artist//getAll');
+
+  findAllTrack(song : string, artist : string){
+    return this.httpClient.get('http://localhost:8088/artist/' + artist + '/' + song);
+  }
+
+  findSong(song : string){
+    return this.httpClient.get('http://localhost:8088/artist/song/' + song);
   }
 }

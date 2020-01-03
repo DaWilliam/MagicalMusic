@@ -100,7 +100,16 @@ public class ArtistController {
         System.out.println(bodyJson);
 
         Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
-        TrackSearchData[] tracks = body.results.trackmatches.track;
+        TrackSearchData[] trackModelObj = body.results.trackmatches.track;
+        
+        //	Create tracks from all the model data
+        Track[] tracks = new Track[trackModelObj.length];
+        for(int i = 0; i < tracks.length; i++)
+        {
+        	tracks[i] = new Track();
+        	tracks[i].artistName = trackModelObj[i].artist;
+        	tracks[i].songName = trackModelObj[i].name;
+        }
         //track.songName = body.results.trackmatches.track[0].name;
         //Artist responseArtist = new Artist(0, "Will", 6);
 
@@ -254,6 +263,7 @@ public class ArtistController {
     public ResponseEntity<List<Track>> getTracks()
     {
         List<Track> allTracks = tr.findAll();
+        
         return new ResponseEntity<List<Track>>(allTracks, HttpStatus.OK);
     }
 

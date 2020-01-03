@@ -1,10 +1,10 @@
 <form>
     <div class="form-row ml-5 mr-5 mt-4">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Song">
+            <input type="text" class="form-control" placeholder="Song"  name="songSearch" [(ngModel)]="songSearch"> 
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Artist">
+            <input type="text" class="form-control" placeholder="Artist" name="artistSearch" [(ngModel)]="artistSearch">
         </div>
         <div class="col">
             <select id="inputState" class="form-control">
@@ -17,9 +17,8 @@
         </div>
     </div>
 </form>
+{{songSearch}}
 
-<ul>
-    <li *ngFor="let song of tracks">
-      <app-song-card [song]="song.songName" [artist]="song.artistName"></app-song-card>
-    </li>
-  </ul>
+<div class="container-fluid">
+    <app-song-card *ngFor="let song of tracks" [song]="song.songName" [artist]=song.artistName></app-song-card>
+</div>

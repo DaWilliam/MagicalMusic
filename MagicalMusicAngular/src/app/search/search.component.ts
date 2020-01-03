@@ -4,6 +4,7 @@ import { InsertionDirective } from './insertion.directive';
 import { TrackserviceService} from '../trackservice.service';
 import { Track } from '../track';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,18 +13,35 @@ import { Observable } from 'rxjs';
 export class SearchComponent implements OnInit {
   @ViewChild(InsertionDirective, {static: true}) songInsertion: InsertionDirective;
 
-  tracks : Object[];
+  tracks : Track[];
+  songSearch : string;
+  artistSearch : string;
+
   //private componentRef: ComponentRef<any>;
   constructor(private Trackservice:TrackserviceService) {
-
+      
   }
 
   ngOnInit() {
+    
     //this.loadComponent();
   }
 
   onSearchClicked(evt: MouseEvent){
-    this.Trackservice.findAllTrack().forEach(this.tracks.push);
+    
+      
+      this.Trackservice.findSong(this.songSearch).subscribe(
+      (data : Track[]) => { 
+        console.log("DataLen: " + data.length);
+        console.log("Data: " + data.values);
+        this.tracks = data
+        this.tracks.forEach(function(value) {
+          console.log(value);
+        })
+        
+      }, error => {
+        console.log(error);
+      });
   }
 
   // loadComponent(){
