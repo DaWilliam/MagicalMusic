@@ -19,7 +19,8 @@ export class UserServiceService {
   }
 
   login(user:User)  {
-    return this.httpClient.post<User>('http://localhost:8088/users/login', user);
+    var password = user.password;
+    return this.httpClient.post<User>('http://localhost:8088/users/login/' + user.name, password);
   }
 
   register(user:User, email:string)  {

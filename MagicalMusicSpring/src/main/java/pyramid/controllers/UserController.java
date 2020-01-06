@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -83,15 +84,34 @@ public class UserController {
 		return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 	}
 	
-    // Login
-    @PostMapping(value = "/login")
-    public ResponseEntity<Track> getTrack(@RequestBody User user){
-    	//if(userJpa.findAll())
-    	if(user.getName().equals("W") && user.getPassword().equals("S"))
+	  // Login
+    @PostMapping(value = "/login/{username}")
+    //@Query("SELECT user.id, user.name FROM User user")
+    public ResponseEntity<Track> getTrack(@PathVariable String username, @RequestParam String password){
+    	System.out.println("HITTING Login");
+    	List<User> namedUsers = userJpa.findAllByName(username);
+    	System.out.println("Named: " + namedUsers);
+    	for(User namedUser : namedUsers)
     	{
-    		System.out.println("DAMN WILL IS AWESOME");
-    		return new ResponseEntity<Track>(HttpStatus.OK);
+    		if(namedUser.getPassword().equals(password))
+    		{
+    			System.out.println("Logged In");
+        		return new ResponseEntity<Track>(HttpStatus.OK);
+    		}
     	}
+    	
+//    	if(userJpa.findAll().size() > 0)
+//    	{
+//    		
+//    	}
+//    	
+////    	/*
+////    	if(user.getName().equals("W") && user.getPassword().equals("S"))
+////    	{
+////    		System.out.println("DAMN WILL IS AWESOME");
+////    		return new ResponseEntity<Track>(HttpStatus.OK);
+////    	}
+////    	*/
     	
     	System.out.println("YOU PUT THE WRONG INFO");
         return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
