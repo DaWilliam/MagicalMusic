@@ -19,7 +19,7 @@ export class UserServiceService {
   }
 
   login(user:User)  {
-    return this.httpClient.post<User>('http://localhost:8088/users/login', user);
+    return this.httpClient.post<User>('http://localhost:8088/users/login/' + user.name, user);
   }
 
   register(user:User, email:string)  {
