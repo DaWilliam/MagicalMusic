@@ -35,8 +35,13 @@ public class UserController {
 	@PostMapping("/add")	//	Short-hand for RequestMapping("/add", RequestMethod.POST)
 	public ResponseEntity<User> addUser(@RequestBody User user)	//	@RequestBody takes all the info as an object. @RequestParam takes data as pieces
 	{
-		User savedUser = userJpa.save(user);
-		return new ResponseEntity<User>(savedUser, HttpStatus.OK);
+		//	Create a new user if the email is not used
+		if(userJpa.findAllByEmail(user.getEmail()).size() == 0)
+		{			
+			User savedUser = userJpa.save(user);
+			return new ResponseEntity<User>(savedUser, HttpStatus.OK);
+		} else	
+			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
 	}
 	
 	@GetMapping("/get/{id}")
