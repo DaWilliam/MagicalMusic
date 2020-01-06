@@ -16,17 +16,40 @@
             <a class="nav-link"  routerLink='FavoritesComponent'>Favorites</a>
         </li>
       </ul>
-      <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-          Profile
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" routerLink='LoginPageComponent'>Login</a>
-            <a class="dropdown-item" routerLink='RegistrationPageComponent'>Register</a>
+      
+      <div *ngIf="globalDataService.loggedIn; else elseBlock">
+        <!-- If the person is logged in -->
+        <div class="nav-item dropdown">
+          <img style="height:100px"
+                src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTY4MzU0NDMzMjc5NzMxNjcw/julian-castro-sergio-floresbloomberg-via-getty-images-square.jpg" 
+                class="rounded-circle"  alt="Image" />
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Profile
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" routerLink='EditUserPageComponent'>Edit</a>
+            <a type="button" class="dropdown-item" (click)="logOut()" routerLink='SearchComponent'>Logout</a>
+          </div>
         </div>
+      </div>
+      <ng-template #elseBlock>
+        <!-- If the person is logged out -->                
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Profile
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" routerLink='LoginPageComponent'>Login</a>
+                <a class="dropdown-item" routerLink='RegistrationPageComponent'>Register</a>
+            </div>
+        </div>
+      </ng-template>
+
+      
     </div>
-    </div>
-  </nav>
+</nav>
+
+
 <!-- <app-tab></app-tab> -->
 <!-- <div class="container-fluid">
 <mat-grid-list cols="4" rowHeight="600px">

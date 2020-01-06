@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalDataService } from './global-data.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'MagicalMusicAngular';
+
+  constructor(public globalDataService : GlobalDataService) {}
+
+  logOut()
+  {
+      this.globalDataService.logOut();
+  }
+
 }

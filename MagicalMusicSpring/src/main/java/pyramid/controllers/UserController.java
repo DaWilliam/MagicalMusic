@@ -87,7 +87,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public ResponseEntity<Track> getTrack(@RequestBody User user){
     	//if(userJpa.findAll())
-    	if(user.getName().equals("Will") && user.getPassword().equals("isAwesome"))
+    	if(user.getName().equals("W") && user.getPassword().equals("S"))
     	{
     		System.out.println("DAMN WILL IS AWESOME");
     		return new ResponseEntity<Track>(HttpStatus.OK);

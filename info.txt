@@ -7,3 +7,8 @@ Application name:	MagicalMusic
 API key:	c781cfdd6742edee32e9c8483f67daee
 Shared secret:	9191354e3cb3b1c62ad40d11fb4fd03c
 Registered to:	magicalbois
+
+napster.com
+Application name:	MagicalMusic
+API key: NjU0YWRhZTYtZGY5YS00MGFkLThlYzYtZmM0NjBmOGE3ZGUx
+API secret: N2YwMTFhNTYtYTQ0NC00MmYwLWEyMjMtNjZhNGRhMzcxNDgz
