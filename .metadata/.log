@@ -1,0 +1,12 @@
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-01-06 11:56:54.140
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.owSvUyAO
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-01-06 11:56:54.166
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.owSvUyAO
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-01-06 11:56:54.298
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2020-01-06 11:56:54.441
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.owSvUyAO => OK
