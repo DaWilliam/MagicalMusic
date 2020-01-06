@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Streamable {
 	@SerializedName("#text")
-	int text;
-	int fulltrack;
+	public int text;
+	public int fulltrack;
 	
 }

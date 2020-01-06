@@ -6,7 +6,7 @@ import pyramid.models.Track;
 
 public class TopTracks {
 	
-	public TrackData[] track;
+	public TrackData[] track;  
 	public TrackSearchData[] trackSearchData;
 	public Track[] tracks;
 	
