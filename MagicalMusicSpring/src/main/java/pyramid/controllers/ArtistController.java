@@ -111,9 +111,13 @@ public class ArtistController {
         	tracks[i].artistName = trackModelObj[i].artist;
         	tracks[i].songName = trackModelObj[i].name;
         	
+        	tracks[i].image = getImg(tracks[i].artistName, tracks[i].songName);
+        	if(tracks[i].image.isEmpty())
+        		tracks[i].image = "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png";
+        	
         	//	If it has an image
-        	if(trackModelObj[i].image.length > 2)
-        		tracks[i].image = trackModelObj[i].image[2].text;
+//        	if(trackModelObj[i].image.length > 2)
+//        		tracks[i].image = trackModelObj[i].image[2].text;
         }
         //track.songName = body.results.trackmatches.track[0].name;
         //Artist responseArtist = new Artist(0, "Will", 6);
@@ -167,10 +171,11 @@ public class ArtistController {
         return new ResponseEntity(stringBuilder, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/img/{artist}/{song}")
-    public ResponseEntity<Artist> getImg(@PathVariable String artist, String song){
+    //@GetMapping(value = "/img/{artist}/{song}")
+    public String getImg(String artist, String song){
+    	System.out.println("Getting image");
     	if(artist.isEmpty() || song.isEmpty()){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return "";
         }
     	if(artist.contains(" ")){
             artist.replaceAll(" ", "+");
@@ -178,55 +183,60 @@ public class ArtistController {
         if(song.contains(" ")){
             song.replaceAll(" ","+");
         }
+        
+        System.out.println("Song not empty artist: " + artist + " song: " + song);
         //https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist=darude&track=sandstorm&format=json
         String url = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist="+artist+"&track="+song+"&format=json";
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        
+        System.out.println("SONG IMAGE RESPONSE: " + response);
+        
+        String bodyJson = response.getBody();
+        System.out.println("SUB: " + bodyJson.substring(2, 7));
+        if(bodyJson.substring(2, 7).equals("error"))
+        	return "";
+        //System.out.println(bodyJson);
+
+        Body_Search_Img body = gson.fromJson(bodyJson, Body_Search_Img.class);
+        System.out.println("Converted Json");
+        String imgURL = body.track.album.image[3].text;
+        return imgURL;
+    }
+
+    //find geo top artist
+    @GetMapping(value = "/{geo}/artist")
+    public ResponseEntity<Artist> getTopArtist(@PathVariable String geo) {
+
+        if(geo.isEmpty()){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        if(geo.contains(" ")){
+            geo.replaceAll(" ", "+");
+        }
+
+        String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
+
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
 
         String bodyJson = response.getBody();
 
         System.out.println(bodyJson);
 
-        Body_Search_Img body = gson.fromJson(bodyJson, Body_Search_Img.class);
+
         
-        String img = "";
-        img+=body.track.album.image[1].text;
-        return new ResponseEntity(img,HttpStatus.OK);
-    }
 
-        //find geo top artist
-        @GetMapping(value = "/{geo}/artist")
-        public ResponseEntity<Artist> getTopArtist(@PathVariable String geo) {
+        Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
+        Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
 
-            if(geo.isEmpty()){
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
-            }
-
-            if(geo.contains(" ")){
-                geo.replaceAll(" ", "+");
-            }
-
-            String url = "https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=" + geo + "&api_key=" + apiKey + "&format=json" ;
-
-
-            RestTemplate restTemplate = new RestTemplate();
-
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-
-
-            String bodyJson = response.getBody();
-
-            System.out.println(bodyJson);
-
-
-            
-
-            Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
-            Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
-
-            //System.out.println(response.getClass());
-            System.out.println("CONVERTED");
+        //System.out.println(response.getClass());
+        System.out.println("CONVERTED");
 
 
         return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);

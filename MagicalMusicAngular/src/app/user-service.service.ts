@@ -7,29 +7,29 @@ import { User } from './user';
 })
 export class UserServiceService {
 
-  //  You have to make it private (or public?) to be seen by the class
-  constructor(private httpClient : HttpClient){ }
+    //  You have to make it private (or public?) to be seen by the class
+    constructor(private httpClient : HttpClient){ }
 
-  getresult(){
-    return this.httpClient.get<Array<User>>('http://localhost:8088/users/getAll');
-  }
-  
-  addUser(user:User)  {
-    return this.httpClient.post<User>('http://localhost:8088/users/add', user);
-  }
+    getresult(){
+      return this.httpClient.get<Array<User>>('http://localhost:8088/users/getAll');
+    }
+    
+    addUser(user:User)  {
+      return this.httpClient.post<User>('http://localhost:8088/users/add', user);
+    }
 
-  login(user:User)  {
-    const params = new HttpParams().set('password', user.password).set('username', user.name)
-    return this.httpClient.post<User>('http://localhost:8088/users/login', params);
-  }
+    login(user:User)  {
+      const params = new HttpParams().set('password', user.password).set('username', user.name)
+      return this.httpClient.post<User>('http://localhost:8088/users/login', params);
+    }
 
-  register(user:User, email:string)  {
-    return this.httpClient.post<User>('http://localhost:8088/users/register', user);
-  }
+    register(user:User, email:string)  {
+      return this.httpClient.post<User>('http://localhost:8088/users/register', user);
+    }
 
-  //  Should find the user by the ID and update it accordingly
-  update(user:User)  {
-    return this.httpClient.post<User>('http://localhost:8088/users/update' + user.id, { user });
-  }
+    //  Should find the user by the ID and update it accordingly
+    update(user:User)  {
+      return this.httpClient.post<User>('http://localhost:8088/users/update' + user.id, { user });
+    }
 
 }
