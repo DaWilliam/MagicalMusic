@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
 import pyramid.models.Track;
 import pyramid.models.searchdata.Body_Search_Artist;
+import pyramid.models.searchdata.Body_Search_Img;
 import pyramid.models.searchdata.Body_Search_Song;
 import pyramid.models.searchdata.TrackSearchData;
 import pyramid.repositories.TrackRepository;
@@ -166,7 +167,33 @@ public class ArtistController {
         return new ResponseEntity(stringBuilder, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/img/{artist}/{song}")
+    public ResponseEntity<Artist> getImg(@PathVariable String artist, String song){
+    	if(artist.isEmpty() || song.isEmpty()){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    	if(artist.contains(" ")){
+            artist.replaceAll(" ", "+");
+        }
+        if(song.contains(" ")){
+            song.replaceAll(" ","+");
+        }
+        //https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist=darude&track=sandstorm&format=json
+        String url = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist="+artist+"&track="+song+"&format=json";
+        RestTemplate restTemplate = new RestTemplate();
 
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        String bodyJson = response.getBody();
+
+        System.out.println(bodyJson);
+
+        Body_Search_Img body = gson.fromJson(bodyJson, Body_Search_Img.class);
+        
+        String img = "";
+        img+=body.track.album.image[1].text;
+        return new ResponseEntity(img,HttpStatus.OK);
+    }
 
         //find geo top artist
         @GetMapping(value = "/{geo}/artist")

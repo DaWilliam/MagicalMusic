@@ -1,0 +1,7 @@
+package pyramid.models.searchdata;
+
+public class wiki {
+	String wiki;
+	String summary;
+	String content;
+}
