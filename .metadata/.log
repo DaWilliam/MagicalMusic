@@ -317,3 +317,6 @@ Caused by: java.io.FileNotFoundException: C:\Users\Bao_LT\OneDrive\Code\Training
 	at java.io.FileOutputStream.<init>(Unknown Source)
 	at org.eclipse.swt.graphics.ImageLoader.save(ImageLoader.java:264)
 	... 12 more
+
+!ENTRY org.eclipse.ui 2 2 2020-01-06 11:51:14.939
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
