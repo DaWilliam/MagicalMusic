@@ -22,4 +22,8 @@ export class TrackserviceService {
   findSong(song : string){
     return this.httpClient.get('http://localhost:8088/artist/song/' + song);
   }
+  
+  findRecommended(){
+    return this.httpClient.get('http://localhost:8088/artist/toptracks');
+  }
 }

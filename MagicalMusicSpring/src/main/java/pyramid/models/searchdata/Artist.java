@@ -1,7 +1,7 @@
 package pyramid.models.searchdata;
 
 public class Artist {
-	String name;
-	String mbid;
-	String url;
+	public String name;
+	public String mbid;
+	public String url;
 }

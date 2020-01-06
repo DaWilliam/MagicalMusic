@@ -112,8 +112,8 @@ public class ArtistController {
         	tracks[i].songName = trackModelObj[i].name;
         	
         	tracks[i].image = getImg(tracks[i].artistName, tracks[i].songName);
-        	if(tracks[i].image.isEmpty())
-        		tracks[i].image = "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png";
+//        	if(tracks[i].image.isEmpty())
+//        		tracks[i].image = "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png";
         	
         	//	If it has an image
 //        	if(trackModelObj[i].image.length > 2)
@@ -201,7 +201,13 @@ public class ArtistController {
 
         Body_Search_Img body = gson.fromJson(bodyJson, Body_Search_Img.class);
         System.out.println("Converted Json");
-        String imgURL = body.track.album.image[3].text;
+        String imgURL="";
+        try {
+        	imgURL = body.track.album.image[3].text;
+        }catch(NullPointerException e) {
+        	imgURL = "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png";
+        }
+        
         return imgURL;
     }
 
@@ -275,6 +281,34 @@ public class ArtistController {
 
     }
 
+    @GetMapping(value = "/toptracks")
+    public ResponseEntity<Track[]> getTopTracks() {
+
+        Gson gson = new Gson();
+
+        String url = "https://ws.audioscrobbler.com/2.0/?method=tag.gettoptracks&api_key=c781cfdd6742edee32e9c8483f67daee&format=json" ;
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        String bodyJson = response.getBody();
+
+        System.out.println(bodyJson);
+
+        Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
+        pyramid.models.searchdata.Track[] tracks = body.tracks.track;
+        Track[] tracklist = new Track[tracks.length];
+        for(int i = 0; i< tracklist.length; i++) {
+        	tracklist[i]=new Track();
+        	tracklist[i].songName = tracks[i].name;
+        	tracklist[i].artistName = tracks[i].artist.name;
+        	tracklist[i].image = getImg(tracklist[i].artistName, tracklist[i].songName);
+        }
+
+        return new ResponseEntity(tracklist, HttpStatus.OK);
+
+    }
+    
     // add track
     @PostMapping(value = "/add")
     public ResponseEntity<Track> addTrack(@RequestBody Track track){
