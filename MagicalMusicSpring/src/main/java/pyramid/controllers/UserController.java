@@ -87,13 +87,13 @@ public class UserController {
 	  // Login
     @PostMapping(value = "/login/{username}")
     //@Query("SELECT user.id, user.name FROM User user")
-    public ResponseEntity<Track> getTrack(@PathVariable String username, @RequestParam String password){
+    public ResponseEntity<Track> getTrack(@PathVariable String username, @RequestBody User user){
     	System.out.println("HITTING Login");
     	List<User> namedUsers = userJpa.findAllByName(username);
     	System.out.println("Named: " + namedUsers);
     	for(User namedUser : namedUsers)
     	{
-    		if(namedUser.getPassword().equals(password))
+    		if(namedUser.getPassword().equals(user.getPassword()))
     		{
     			System.out.println("Logged In");
         		return new ResponseEntity<Track>(HttpStatus.OK);
