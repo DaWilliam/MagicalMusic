@@ -1,0 +1,9 @@
+package pyramid.models.searchdata;
+
+public class Track {
+	String name;
+	String mbid;
+	String url;
+	int duration;
+	
+}

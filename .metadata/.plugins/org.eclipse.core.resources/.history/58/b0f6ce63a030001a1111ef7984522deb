@@ -1,0 +1,9 @@
+package pyramid.models.searchdata;
+
+public class Album {
+	String artist;
+	String title;
+	String mbid;
+	String url;
+	Image[] image;
+}

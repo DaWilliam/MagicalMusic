@@ -1,0 +1,13 @@
+package pyramid.models.searchdata;
+
+public class Track {
+	String name;
+	String mbid;
+	String url;
+	int duration;
+	Streamable streamable;
+	int listiners;
+	int playcount;
+	Artist artist;
+	
+}
