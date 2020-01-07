@@ -27,6 +27,7 @@ export class FavoritesComponent implements OnInit {
   }
 
   findFavorites() {
+      location.reload;
       console.log("Finding Favorites from favComp")
       if(this.globalDataService.user == null)
           return;

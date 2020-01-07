@@ -14,4 +14,6 @@ public interface TrackRepository extends JpaRepository<Track,Integer> {
 	@Query(value="select * from Track track where track.user_id = ?1", nativeQuery = true)
 	List<Track> findByUserId(@Param("user_id") int user_id);
 	
+	@Query(value="select * from Track track where track.user_id = ?1 and track.id = ?2", nativeQuery = true)
+	Track findByUserAndSongId(@Param("user_id") int user_id, @Param("id") int id);
 }

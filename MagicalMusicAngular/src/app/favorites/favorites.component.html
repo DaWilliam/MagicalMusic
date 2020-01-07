@@ -1,8 +1,8 @@
-<div *ngIf="globalDataService.loggedIn; else notLoggedIn" (click)="findFavorites()"> 
+<div *ngIf="globalDataService.loggedIn; else notLoggedIn" (change)="findFavorites()"> 
     <h2>Favorites</h2>
     <div class="container-fluid">
         <div class="row">
-            <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image></app-song-card>
+            <app-song-card *ngFor="let song of tracks" (removeEvent)="findFavorites()" [id]=song.id [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=true></app-song-card>
         </div>
     </div>
 </div>

@@ -76,5 +76,16 @@ public class Track {
 		this.user = user;
 	}
 
-	
+	 @Override
+	 public boolean equals(Object o) {
+		 Track compTrack = (Track)o;
+		 boolean bName = this.songName.equals(compTrack.songName);
+		 boolean bArtist = this.artistName.equals(compTrack.artistName);
+		 boolean bURL = this.image == compTrack.image;
+		 
+		 if(bName && bArtist && bURL)
+			 return true;
+		 else
+			 return false;		 		
+	 }
 }

@@ -17,6 +17,11 @@ export class TrackserviceService {
     return this.httpClient.post<Track>('http://localhost:8088/artist/add/' + this.globalDataService.user.id, track);
   }
 
+  removeTrack(track: Track)  {
+    const params = new HttpParams().set('id', track.id.toString()).set('artist', track.artistName).set('song', track.songName).set('imageURL', track.image);
+    return this.httpClient.request<Track[]>('delete', 'http://localhost:8088/artist/delete/' + this.globalDataService.user.id, {params});
+  }
+
   findAllTrack(song : string, artist : string){
     return this.httpClient.get('http://localhost:8088/artist/' + artist + '/' + song);
   }

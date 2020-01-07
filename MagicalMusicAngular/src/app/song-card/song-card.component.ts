@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TrackserviceService } from '../trackservice.service';
 import { Track } from '../track';
 import { Song } from '../song';
+import { GlobalDataService } from '../global-data.service';
+import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-song-card',
   templateUrl: './song-card.component.html',
@@ -12,11 +14,14 @@ import { Song } from '../song';
 export class SongCardComponent implements OnInit {
   //  FormGroup Did You Know: 
   //    Value of data/favoriteForm is the variable names of the HTML page
+  @Input() id : number;
   @Input() song : string;
   @Input() artist : string;
   @Input() image : string;
-  
-  constructor(private sTrack : TrackserviceService) { 
+  @Input() isFavorited : boolean;
+  @Output() removeEvent = new EventEmitter();
+
+  constructor(private sTrack : TrackserviceService, private globalDataService : GlobalDataService) { 
     //this.song = "This is the longest Song-Name You have ever seen";
     this.song = "Song-Name";
     this.artist = "Artist-Name";      
@@ -27,7 +32,17 @@ export class SongCardComponent implements OnInit {
     console.log("SONG2: " + this.song);
   }
 
+  onClick() {
+      if(!this.isFavorited)      
+          this.addFavorite();
+      else
+          this.removeFavorite();
+      
+  }
+
   addFavorite() {        
+      this.isFavorited = true;
+
       var track = new Track();
       track.songName = this.song;
       track.artistName = this.artist;
@@ -42,10 +57,26 @@ export class SongCardComponent implements OnInit {
       )
   }
 
-  centered = false;
-  disabled = false;
-  unbounded = false;
+  removeFavorite() {      
+      this.isFavorited = false;
 
-  radius: number;
-  color: string;
+      var track = new Track();
+      track.id = this.id;
+      track.songName = this.song;
+      track.artistName = this.artist;
+      track.image = this.image;
+      
+      this.sTrack.removeTrack(track).subscribe(
+        data  => {                   
+          this.globalDataService.favTracks = data;          
+          console.log("Removed Song");
+          console.log("About to emit")
+          this.removeEvent.emit(null);
+          console.log("Emitted");
+        }, error => {
+          console.log("WE COULDN'T REMOVE YOUR SONG FOOL");
+        })
+        
+        
+  }
 }

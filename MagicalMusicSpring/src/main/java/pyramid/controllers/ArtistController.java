@@ -349,19 +349,28 @@ public class ArtistController {
         return new ResponseEntity<List<Track>>(allTracks, HttpStatus.OK);
     }
 
-
     //delete track
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Track> delete(@PathVariable int id)
+    @DeleteMapping(value = "/delete/{user_id}")
+    public ResponseEntity<List<Track>> delete(@PathVariable int user_id, @RequestParam String id, @RequestParam String artist, @RequestParam String song, @RequestParam String imageURL)
     {
-        if(tr.existsById(id))
-        {
-            tr.deleteById(id);
-            return new ResponseEntity<Track>(HttpStatus.OK);
-        }
-        return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    	System.out.println("Trying to delete");
+    	int songId = Integer.parseInt(id);
+    	
+    	Track scoutTrack = tr.findByUserAndSongId(user_id, songId);//new Track(songId, song, artist, imageURL);
+    	List<Track> favoriteList = tr.findByUserId(user_id);
+    	if(favoriteList.contains(scoutTrack))
+    	{
+    		System.out.println("Deleted Track");
+    		tr.delete(scoutTrack);
+    		favoriteList.remove(scoutTrack);
+    		return new ResponseEntity<List<Track>>(favoriteList, HttpStatus.OK);
+    	}
+    	
+    	System.out.println("Track doesn't exist");
+        return new ResponseEntity<List<Track>>(HttpStatus.NOT_FOUND);
     }
 
+    
     @GetMapping("/favorites/{id}")
     public ResponseEntity<List<Track>> getUserFavorites(@PathVariable int id)
     {
