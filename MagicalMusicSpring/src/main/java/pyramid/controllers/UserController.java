@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pyramid.models.Track;
 import pyramid.models.User;
+import pyramid.repositories.TrackRepository;
 import pyramid.repositories.UserRepository;
 
 
@@ -38,8 +39,8 @@ public class UserController {
 	{
 		//	Create a new user if the email is not used
 		if(userJpa.findAllByEmail(user.getEmail()).size() == 0)
-		{			
-			User savedUser = userJpa.save(user);
+		{		
+			User savedUser = userJpa.save(user);			
 			return new ResponseEntity<User>(savedUser, HttpStatus.OK);
 		} else	
 			return new ResponseEntity<User>(user, HttpStatus.CONFLICT);
@@ -91,16 +92,25 @@ public class UserController {
 	
 	  // Login
     @PostMapping(value = "/login")
-    
-    public ResponseEntity<Track> getTrack(@RequestParam String username, @RequestParam String password){
-    	System.out.println("HITTING Login");
-    	List<User> namedUsers = userJpa.findUserByLogin(username, password);
-    	if(namedUsers.size() > 0)
-		{
-			System.out.println("Logged In");
-    		return new ResponseEntity<Track>(HttpStatus.OK);
-		}
-    		
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password){
+    	try
+    	{
+    		System.out.println("HITTING Login");
+	    	List<User> namedUsers = userJpa.findUserByLogin(username, password);
+	    	if(namedUsers.size() > 0)
+			{
+	    		User lUser = namedUsers.get(0);
+				System.out.println("Logged In " + lUser.getName() + lUser.getPassword() + lUser.getId());
+	    		return new ResponseEntity<User>(lUser, HttpStatus.OK);
+			}
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println("Exception Here");
+    		System.out.println("YOU PUT THE WRONG INFO");
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    	}
+    	return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 //    	System.out.println("Named: " + namedUsers);
 //    	for(User namedUser : namedUsers)
 //    	{
@@ -111,7 +121,6 @@ public class UserController {
 //    		}
 //    	}
     	
-    	System.out.println("YOU PUT THE WRONG INFO");
-        return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
+    	
     }
 }

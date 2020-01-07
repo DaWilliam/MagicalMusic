@@ -12,7 +12,7 @@
     <div class="w-100  m-2 container" style="align-content: center; text-align: center; width:500px; ">        
         <span>Username: </span>
         <mat-form-field style="width:300px; text-align: left; " >
-            <input matInput [(ngModel)]='username' name="username" style="width:300px; border-bottom: black solid 1px;" [readonly]="usernameEdting"/>
+            <input matInput [(ngModel)]='username' name="username" [readonly]="usernameEdting"/>
         </mat-form-field>
         <button class="btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">
             <mat-icon style="font-size: 25px;">create</mat-icon>
@@ -22,7 +22,7 @@
     <div class="w-100  m-2" style="align-content: center; text-align: center; ">
         <span>Password: </span>
         <mat-form-field style="width:300px;">
-            <input matInput [(ngModel)]='password' name="password" style="width:300px; border-bottom: black solid 1px;" [readonly]="passwordEditing"/>
+            <input matInput [(ngModel)]='password' name="password" [readonly]="passwordEditing"/>
         </mat-form-field>
         <button class="btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">
             <mat-icon style="font-size: 25px;">create</mat-icon>
@@ -32,7 +32,7 @@
     <div class="w-100  m-2" style="align-content: center; text-align: center;  padding-left:30px;">
         <span>Email: </span>
         <mat-form-field style="width:300px;">
-            <input matInput [(ngModel)]='email' name="email" style="width:300px; border-bottom: black solid 1px;"/>
+            <input matInput [(ngModel)]='email' name="email" />
         </mat-form-field>
         <button class="btn-danger" style="padding-left:5px;"data-toggle="button" aria-pressed="false" autocomplete="off">
             <mat-icon style="font-size: 25px;">create</mat-icon>

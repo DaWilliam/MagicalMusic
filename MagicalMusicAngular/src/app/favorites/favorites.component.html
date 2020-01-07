@@ -1,1 +1,12 @@
-<p>favorites works!</p>
+<div *ngIf="globalDataService.loggedIn; else notLoggedIn" (change)="findFavorites()"> 
+    <h2>Favorites</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <app-song-card *ngFor="let song of tracks" (removeEvent)="findFavorites()" [id]=song.id [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=true></app-song-card>
+        </div>
+    </div>
+</div>
+<ng-template #notLoggedIn>
+    <h3 class="container-fluid" style="vertical-align: center; text-align: center;">Log in to see favorites</h3>
+    
+</ng-template>

@@ -24,9 +24,8 @@
     </mat-grid-tile>
 </mat-grid-list> -->
 
-
 <div class="container-fluid">
     <div class="row">
-        <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image></app-song-card>
+        <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=false></app-song-card>
     </div>
 </div>

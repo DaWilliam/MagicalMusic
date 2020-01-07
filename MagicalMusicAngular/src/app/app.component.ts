@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { GlobalDataService } from './global-data.service';
+import { TrackserviceService } from './trackservice.service';
+import { Track } from './track';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +10,14 @@ import { GlobalDataService } from './global-data.service';
 })
 export class AppComponent {
   title = 'MagicalMusicAngular';
+  favTracks : Track[];
 
-  constructor(public globalDataService : GlobalDataService) {}
+  constructor(private trackService : TrackserviceService, public globalDataService : GlobalDataService) {}
 
   logOut()
   {
       this.globalDataService.logOut();
   }
 
+  
 }

@@ -1,10 +1,21 @@
 package pyramid.models;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -14,23 +25,36 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	
+	@JsonIgnore
+	@OneToMany (fetch = FetchType.LAZY, mappedBy="user")	//	Saying in the other class, in this case 'Track' there is a variable named user
+	public List<Track> tracks;
+	
 	String name;
 	String password;
 	String email;	
 	String image;
 	
-	public User(int id, String name, String password, String email, String image) {
+	public User(int id, String name, String password, String email, String image, List<Track> tracks) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 		this.image = image;
+		this.tracks = tracks;
 	}
 	
 	public User()
 	{
 		
+	}
+
+	public List<Track> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(List<Track> tracks) {
+		this.tracks = tracks;
 	}
 
 	public void updateValues(String name, String password, String image)

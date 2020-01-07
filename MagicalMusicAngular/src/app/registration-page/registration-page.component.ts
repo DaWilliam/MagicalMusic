@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserServiceService } from '../user-service.service';
 import { User } from '../user';
+import { GlobalDataService } from '../global-data.service';
 
 @Component({
   selector: 'app-registration-page',
@@ -15,7 +16,7 @@ export class RegistrationPageComponent implements OnInit {
 
   errorMessage : string;
 
-  constructor(private uService : UserServiceService) { }
+  constructor(private uService : UserServiceService, private globalDataService : GlobalDataService) { }
 
   ngOnInit() {
     
@@ -30,7 +31,11 @@ export class RegistrationPageComponent implements OnInit {
     
     this.uService.addUser(user).subscribe(
       data => {
-        console.log("Registering");
+        console.log("Registering " + data.name);
+        this.globalDataService.logIn(data); 
+        this.username = data.name;
+        this.password = data.password;
+        this.email = data.password;        
       }, error => {
         if(error.status == '409')
         {
