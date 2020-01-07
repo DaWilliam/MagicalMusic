@@ -19,27 +19,22 @@ export class SongCardComponent implements OnInit {
   constructor(private sTrack : TrackserviceService) { 
     //this.song = "This is the longest Song-Name You have ever seen";
     this.song = "Song-Name";
-    this.artist = "Artist-Name";    
+    this.artist = "Artist-Name";      
     console.log("SONG: " + this.song);
   }
 
   ngOnInit() {
     console.log("SONG2: " + this.song);
-    
-
   }
 
   addFavorite() {        
       var track = new Track();
-      track.songName = "The William Song";
-      track.artistName = "William";
-      track.image = "YOUR IMAGE GOES HERE";
-
+      track.songName = this.song;
+      track.artistName = this.artist;
+      track.image = this.image;
+      
       this.sTrack.addTrack(track).subscribe(
-        data => {                    
-          // track.songName = data.songName;
-          // track.artistName = data.artistName;
-          // track.image = data.image;
+        data => {                   
           console.log("ADDED SONG");
         }, error => {
           console.log("WE COULDN'T FAVORITE YOUR SONG FOOL");

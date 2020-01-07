@@ -35,8 +35,8 @@ export class LoginPageComponent implements OnInit {
     //console.log("Name: " + user.name + " Pass: " + user.password);
     this.sUser.login(user).subscribe(
       data => {
-        this.sGlobal.logIn(user);
-        console.log("YA BOI " + user.name + " IS NOW PART OF THE GANG");
+        this.sGlobal.logIn(data);
+        console.log("YA BOI " + data.id + " IS NOW PART OF THE GANG");
       }, error => {
         console.log("COULD NOT ADD YOUR BOI");
       }

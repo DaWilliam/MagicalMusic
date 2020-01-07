@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import pyramid.models.Artist;
 import pyramid.models.Track;
+import pyramid.models.User;
 import pyramid.models.searchdata.Body_Search_Artist;
 import pyramid.models.searchdata.Body_Search_Img;
 import pyramid.models.searchdata.Body_Search_Song;
 import pyramid.models.searchdata.TrackSearchData;
 import pyramid.repositories.TrackRepository;
+import pyramid.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:4200")	//	Should be the location that the angular server is hosted on
@@ -27,6 +31,9 @@ public class ArtistController {
     @Autowired
     TrackRepository tr;
 
+    @Autowired	//	Dependency Injection. Automatic Singleton Instance (from bean?)
+	UserRepository userJpa;
+    
     @Value("${api.key}")
     private String apiKey;
 
@@ -171,7 +178,7 @@ public class ArtistController {
         return new ResponseEntity(stringBuilder, HttpStatus.OK);
     }
 
-    //@GetMapping(value = "/img/{artist}/{song}")
+    //	Gets the image for the song
     public String getImg(String artist, String song){
     	System.out.println("Getting image");
     	if(artist.isEmpty() || song.isEmpty()){
@@ -184,8 +191,6 @@ public class ArtistController {
             song.replaceAll(" ","+");
         }
         
-        System.out.println("Song not empty artist: " + artist + " song: " + song);
-        //https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist=darude&track=sandstorm&format=json
         String url = "https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=c781cfdd6742edee32e9c8483f67daee&artist="+artist+"&track="+song+"&format=json";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -194,10 +199,8 @@ public class ArtistController {
         System.out.println("SONG IMAGE RESPONSE: " + response);
         
         String bodyJson = response.getBody();
-        System.out.println("SUB: " + bodyJson.substring(2, 7));
         if(bodyJson.substring(2, 7).equals("error"))
         	return "";
-        //System.out.println(bodyJson);
 
         Body_Search_Img body = gson.fromJson(bodyJson, Body_Search_Img.class);
         System.out.println("Converted Json");
@@ -310,10 +313,13 @@ public class ArtistController {
     }
     
     // add track
-    @PostMapping(value = "/add")
-    public ResponseEntity<Track> addTrack(@RequestBody Track track){
+    @PostMapping(value = "/add/{id}")
+    public ResponseEntity<Track> addTrack(@RequestBody Track track, @PathVariable int id){
     	System.out.println("Added Track from Spring");
-    	track.id = (int)tr.count() + 1;
+    	    	
+    	Optional<User> currentUser = userJpa.findById(id);
+    	track.id = (int)tr.count() + 1;  	
+    	track.user = currentUser.get();
     	
         tr.save(track);
         return new ResponseEntity<Track>(HttpStatus.OK);
@@ -356,5 +362,11 @@ public class ArtistController {
         return new ResponseEntity<Track>(HttpStatus.NOT_FOUND);
     }
 
-
+    @GetMapping("/favorites/{id}")
+    public ResponseEntity<List<Track>> getUserFavorites(@PathVariable int id)
+    {
+    	List<Track> newTracks = tr.findByUserId(id);
+    	System.out.println("Lenght: " + newTracks.size());
+    	return new ResponseEntity<List<Track>>(newTracks, HttpStatus.OK);
+    }
 }

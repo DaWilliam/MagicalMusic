@@ -1,3 +1,4 @@
+import { User } from './user';
 
 export class Track {
 
@@ -5,4 +6,6 @@ export class Track {
    songName: string;
    artistName: string;
    image: string;
+
+   user : User;
 }

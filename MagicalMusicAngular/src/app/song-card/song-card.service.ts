@@ -23,11 +23,11 @@ export class SongCardService {
   appendDialogComponentToBody(){
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SongCardComponent);
     const componentRef = componentFactory.create(this.injector);
-  this.appRef.attachView(componentRef.hostView);
+    this.appRef.attachView(componentRef.hostView);
 
-  const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-  document.body.appendChild(domElem);
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
 
-  this.dialogComponentRef = componentRef;
+    this.dialogComponentRef = componentRef;
   }
 }

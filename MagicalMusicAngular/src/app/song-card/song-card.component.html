@@ -45,7 +45,11 @@
 
             <mat-card-actions style="text-align: center;">            
                 <div class="container-flex" style="text-align: center;">
-                    <button type="button" class="btn btn-danger button" data-toggle="button" aria-pressed="false" autocomplete="off">
+                    <!-- <button mat-button (click)="addFavorite()">
+                        <mat-icon style="font-size: 50px; height: 50px; width: 50px;">favorite</mat-icon>                    
+                    </button> -->
+
+                    <button type="button" (click)="addFavorite()" class="btn btn-danger button" data-toggle="button" aria-pressed="false" autocomplete="off">
                         <mat-icon style="font-size: 50px; height: 50px; width: 50px;">favorite</mat-icon>
                     </button>
                 </div>

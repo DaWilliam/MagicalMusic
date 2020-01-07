@@ -36,7 +36,7 @@ import { SongsListComponent } from './songs-list/songs-list.component';
     RegistrationPageComponent,
     LoginPageComponent,
     EditUserPageComponent,
-    SongsListComponent,
+    SongsListComponent
   ],
   imports: [
     BrowserModule,
