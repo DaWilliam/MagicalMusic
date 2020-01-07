@@ -1,5 +1,9 @@
-<div class="container-fluid">
+
+<div *ngIf="isLoading && (tracks != null); else elseBlock" class="container-fluid">
     <div class="row">
         <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=false></app-song-card>
     </div>
+</div>
+<div *ngIf="isLoading && (tracks == null)">
+    <h2 style="text-align: center; margin-top: 100px;">Loading...</h2>
 </div>

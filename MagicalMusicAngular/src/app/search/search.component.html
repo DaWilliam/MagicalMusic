@@ -24,8 +24,13 @@
     </mat-grid-tile>
 </mat-grid-list> -->
 
-<div class="container-fluid">
-    <div class="row">
-        <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=false></app-song-card>
+<div *ngIf="isSearching && (tracks != null);">
+    <div class="container-fluid">
+        <div class="row">
+            <app-song-card *ngFor="let song of tracks" [song]=song.songName [artist]=song.artistName [image]=song.image [isFavorited]=false></app-song-card>
+        </div>
     </div>
+</div>
+<div *ngIf="isSearching && (tracks == null);">
+    <h2 style="text-align: center; margin-top: 100px;">Searching...</h2>
 </div>

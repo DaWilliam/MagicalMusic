@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   tracks : Track[];
   songSearch : string;
   artistSearch : string;
+  isSearching : boolean;
 
   //private componentRef: ComponentRef<any>;
   constructor(private Trackservice:TrackserviceService) {
@@ -27,7 +28,9 @@ export class SearchComponent implements OnInit {
     //this.loadComponent();
   }
 
-  onSearchClicked(evt: MouseEvent){          
+  onSearchClicked(evt: MouseEvent){         
+    this.isSearching = true;
+
     console.log("song "+isValid(this.songSearch));
     console.log("artist "+isValid(this.artistSearch));
     if(isValid(this.songSearch) && isValid(this.artistSearch)){

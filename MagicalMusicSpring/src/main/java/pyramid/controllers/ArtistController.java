@@ -296,7 +296,7 @@ public class ArtistController {
         	tracklist[i].image = getImg(tracklist[i].artistName, tracklist[i].songName);
         }
 
-        return new ResponseEntity(tracklist, HttpStatus.OK);
+        return new ResponseEntity<Track[]>(tracklist, HttpStatus.OK);
 
     }
     
