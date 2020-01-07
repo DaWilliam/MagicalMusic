@@ -34,6 +34,10 @@ export class TrackserviceService {
     return this.httpClient.get('http://localhost:8088/artist/' + artist);
   }
 
+  findGeoTop(country : string){
+    return this.httpClient.get('http://localhost:8088/'+country+'/tracks');
+  }
+
   findRecommended(){
     return this.httpClient.get('http://localhost:8088/artist/toptracks');
   }
