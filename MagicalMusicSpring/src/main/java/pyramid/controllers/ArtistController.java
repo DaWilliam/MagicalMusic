@@ -13,6 +13,8 @@ import pyramid.models.User;
 import pyramid.models.searchdata.Body_Search_Artist;
 import pyramid.models.searchdata.Body_Search_Img;
 import pyramid.models.searchdata.Body_Search_Song;
+import pyramid.models.searchdata.Body_Search_Song_With_Artist;
+import pyramid.models.searchdata.TrackData;
 import pyramid.models.searchdata.TrackSearchData;
 import pyramid.repositories.TrackRepository;
 import pyramid.repositories.UserRepository;
@@ -41,10 +43,10 @@ public class ArtistController {
 
     //find artist
     @GetMapping(value = "/{artist}")
-    public ResponseEntity<Artist> getArtist(@PathVariable String artist) {
+    public ResponseEntity<List<Track>> getArtist(@PathVariable String artist) {
 
         if(artist.isEmpty()){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Track>>(HttpStatus.NOT_FOUND);
         }
 
         if(artist.contains(" ")){
@@ -64,21 +66,11 @@ public class ArtistController {
         System.out.println(bodyJson);
         
         Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
-        Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
         
-        //System.out.println(response.getClass());
-        System.out.println("CONVERTED");
-
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Artist: " + body.toptracks.attr.artist + System.lineSeparator()
-                + " | Listeners: " + body.toptracks.attr.total);
-
-//        return new ResponseEntity<Artist>(responseArtist, HttpStatus.OK);
-
-        return new ResponseEntity(stringBuilder, HttpStatus.OK);
-
-
+        TrackData[] trackSearchData = body.toptracks.track;
+        List<Track> tracks =  ConvertTrackData(trackSearchData);
+        
+        return new ResponseEntity<List<Track>>(tracks, HttpStatus.OK);
     }
 
 
@@ -134,11 +126,11 @@ public class ArtistController {
 
     //find song with artist
     @GetMapping(value = "/{artist}/{song}")
-    public ResponseEntity<Artist> getSongWArtist(@PathVariable String artist, @PathVariable String song)
+    public ResponseEntity<List<Track>> getSongWArtist(@PathVariable String artist, @PathVariable String song)
     {
 
         if(artist.isEmpty() || song.isEmpty()){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Track>>(HttpStatus.NOT_FOUND);
         }
 
         if(artist.contains(" ")){
@@ -162,20 +154,19 @@ public class ArtistController {
         System.out.println(bodyJson);
 
         Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
-//        TrackSearchData[] tracks = body.results.trackmatches.track;
-        Track track = new Track();
-        track.songName = body.results.trackmatches.track[0].name;
+        TrackSearchData[] trackSearchData = body.results.trackmatches.track;
+        List<Track> tracks =  ConvertTrackSearchData(trackSearchData);
+        
+        return new ResponseEntity<List<Track>>(tracks, HttpStatus.OK);
 
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Track: " + track.songName + System.lineSeparator()
-                + " | Artist: " + body.results.trackmatches.track[0].artist + System.lineSeparator()
-                + " | Listeners: " + body.results.trackmatches.track[0].listeners
-                + " | ImageURL: " + body.results.trackmatches.track[0].image[0].text);
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("Track: " + track.songName + System.lineSeparator()
+//                + " | Artist: " + body.results.trackmatches.track[0].artist + System.lineSeparator()
+//                + " | Listeners: " + body.results.trackmatches.track[0].listeners
+//                + " | ImageURL: " + body.results.trackmatches.track[0].image[0].text);
 
 
 //      return new ResponseEntity(track, HttpStatus.OK);
-        return new ResponseEntity(stringBuilder, HttpStatus.OK);
     }
 
     //	Gets the image for the song
@@ -236,10 +227,7 @@ public class ArtistController {
 
         String bodyJson = response.getBody();
 
-        System.out.println(bodyJson);
-
-
-        
+        System.out.println(bodyJson);       
 
         Body_Search_Artist body = gson.fromJson(bodyJson, Body_Search_Artist.class);
         Artist responseArtist = new Artist(0, body.toptracks.attr.artist, body.toptracks.attr.total);
@@ -255,10 +243,10 @@ public class ArtistController {
 
     //find geo top tracks
     @GetMapping(value = "/{geo}/tracks")
-    public ResponseEntity<TrackSearchData[]> getTopTracks(@PathVariable String geo) {
+    public ResponseEntity<List<Track>> getTopTracks(@PathVariable String geo) {
 
         if(geo.isEmpty()){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Track>>(HttpStatus.NOT_FOUND);
         }
 
         if(geo.contains(" ")){
@@ -277,10 +265,10 @@ public class ArtistController {
         System.out.println(bodyJson);
 
         Body_Search_Song body = gson.fromJson(bodyJson, Body_Search_Song.class);
-        TrackSearchData[] tracks = body.topTracks.trackSearchData;
-
-
-        return new ResponseEntity(tracks, HttpStatus.OK);
+        pyramid.models.searchdata.Track[] trackData = body.tracks.track;
+        List<Track> tracks =  ConvertTrackModel(trackData);
+        
+        return new ResponseEntity<List<Track>>(tracks, HttpStatus.OK);
 
     }
 
@@ -378,4 +366,39 @@ public class ArtistController {
     	System.out.println("Lenght: " + newTracks.size());
     	return new ResponseEntity<List<Track>>(newTracks, HttpStatus.OK);
     }
+    
+    public List<Track> ConvertTrackSearchData(TrackSearchData[] trackSearchData)
+	{
+		List<Track> tracks = new ArrayList<Track>();
+		for(TrackSearchData tsData : trackSearchData)
+		{
+			System.out.println("Getting track search data: " + tsData.name);
+			tracks.add(new Track(-1, tsData.name, tsData.artist, getImg( tsData.artist, tsData.name)));
+		}
+		return tracks;
+	}
+    
+    public List<Track> ConvertTrackData(TrackData[] trackData)
+	{
+		List<Track> tracks = new ArrayList<Track>();
+		for(TrackData tsData : trackData)
+		{
+			System.out.println("Getting track search data: " + tsData.name);
+			tracks.add(new Track(-1, tsData.name, tsData.artist.name, getImg(tsData.artist.name, tsData.name)));
+		}
+		return tracks;
+	}
+    
+    public List<Track> ConvertTrackModel(pyramid.models.searchdata.Track[] modelTracks)
+    {
+    	List<Track> tracks = new ArrayList<Track>();
+		for(pyramid.models.searchdata.Track tsData : modelTracks)
+		{
+			System.out.println("Getting track search data: " + tsData.name);
+			tracks.add(new Track(-1, tsData.name, tsData.artist.name, getImg(tsData.artist.name, tsData.name)));
+		}
+		return tracks;
+    }
 }
+
+
