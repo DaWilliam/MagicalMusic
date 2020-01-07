@@ -9,9 +9,12 @@ import { Track } from '../track';
 })
 export class RecommendedComponent implements OnInit {
   tracks : Track[];
+  isLoading = new Boolean();
+
   constructor(private Trackservice:TrackserviceService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.Trackservice.findRecommended().subscribe(
       (data : Track[]) => { 
         console.log("DataLen: " + data.length);
