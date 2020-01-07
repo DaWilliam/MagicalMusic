@@ -23,6 +23,10 @@ export class TrackserviceService {
     return this.httpClient.get('http://localhost:8088/artist/song/' + song);
   }
   
+  findArtist(artist : string){
+    return this.httpClient.get('http://localhost:8088/artist/' + artist);
+  }
+
   findRecommended(){
     return this.httpClient.get('http://localhost:8088/artist/toptracks');
   }
