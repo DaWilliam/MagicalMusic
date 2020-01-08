@@ -1,31 +1,34 @@
 
 <h1 class="p-4" style="text-align: center;">Registration</h1>
 <form>
-<div class="d-flex flex-column justify-content-center align-items-center" style="text-align: center; height: 500px">    
-
-    <div class="w-100  m-2" style="align-content: center; ">
+<div class="d-flex flex-column justify-content-center align-items-center" style="text-align: center; height: 500px; margin-top: 70px;">    
+    <!-- (click) ="uploadImage($event.target.files)" -->
+    <div class="w-100  m-2" style="align-content: center; " >
+        <input type="file" accept="image/*" (change)="onFileChange($event)" style="display: none;" observeFiles #file>
         <input type="image" 
-                src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTY4MzU0NDMzMjc5NzMxNjcw/julian-castro-sergio-floresbloomberg-via-getty-images-square.jpg" 
-                class="rounded-circle" alt="Image" />
+                (click)="file.click()"             
+                [src]=url
+                style="height: 300px; width: 300px; position: relative; overflow: hidden;"
+                class="rounded-circle"  alt="Image" />
     </div>
     
-    <div class="w-100  m-2" style="align-content: center; text-align: center; width:500px; padding-left: 120px;">
+    <div class="w-100  m-2" style="align-content: center; text-align: center; width:500px;">
         <span>Username: </span>
-        <mat-form-field style="width:500px; text-align: left;" >
+        <mat-form-field style="width:300px; text-align: left;" >
             <input style="width:500px" matInput [(ngModel)]='username' name="username"/>
         </mat-form-field>
     </div>
 
-    <div class="w-100  m-2" style="align-content: center; text-align: center; padding-left: 120px;">
+    <div class="w-100  m-2" style="align-content: center; text-align: center; ">
         <span>Password: </span>
-        <mat-form-field style="width:500px;">
+        <mat-form-field style="width:300px;">
             <input matInput [(ngModel)]='password' name="password"/>
         </mat-form-field>
     </div>
 
-    <div class="w-100  m-2" style="align-content: center; text-align: center; padding-left: 150px;">
+    <div class="w-100  m-2" style="align-content: center; text-align: center; padding-left: 30px;">
         <span>Email: </span>
-        <mat-form-field style="width:500px;">
+        <mat-form-field style="width:300px;">
             <input style="width:500px" matInput [(ngModel)]='email' name="email"/>
         </mat-form-field>
     </div>

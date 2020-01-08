@@ -9,5 +9,6 @@ export class User {
     image : string;
 
     tracks : Track[];
+    imageFile : File;
     
 }

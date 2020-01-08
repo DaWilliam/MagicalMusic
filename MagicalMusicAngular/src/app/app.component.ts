@@ -10,9 +10,19 @@ import { Track } from './track';
 })
 export class AppComponent {
   title = 'MagicalMusicAngular';
+  url = "";
   favTracks : Track[];
 
   constructor(private trackService : TrackserviceService, public globalDataService : GlobalDataService) {}
+
+  onChange() {
+    var reader = new FileReader();
+    reader.onload = (event : any) => {
+      this.url = event.data;
+    };
+    
+    reader.readAsDataURL(this.globalDataService.user.imageFile)
+  }
 
   logOut()
   {

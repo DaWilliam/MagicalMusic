@@ -1,5 +1,6 @@
 package pyramid.models;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,9 @@ public class User {
 	String email;	
 	String image;
 	
-	public User(int id, String name, String password, String email, String image, List<Track> tracks) {
+	File imageFile;
+	
+	public User(int id, String name, String password, String email, String image, List<Track> tracks, File imageFile) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -42,11 +45,21 @@ public class User {
 		this.email = email;
 		this.image = image;
 		this.tracks = tracks;
+		this.imageFile = imageFile;
 	}
 	
 	public User()
 	{
 		
+	}
+
+	
+	public File getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(File imageFile) {
+		this.imageFile = imageFile;
 	}
 
 	public List<Track> getTracks() {
