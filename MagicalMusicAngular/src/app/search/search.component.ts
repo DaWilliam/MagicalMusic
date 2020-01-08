@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
   songSearch : string;
   artistSearch : string;
   isSearching : boolean;
+  countrySearch : string;
 
   //private componentRef: ComponentRef<any>;
   constructor(private Trackservice:TrackserviceService) {
@@ -33,7 +34,22 @@ export class SearchComponent implements OnInit {
 
     console.log("song "+isValid(this.songSearch));
     console.log("artist "+isValid(this.artistSearch));
-    if(isValid(this.songSearch) && isValid(this.artistSearch)){
+    console.log("country: " + this.countrySearch);
+    if(this.countrySearch!=="Select Country"){
+      console.log("finding country");
+      this.Trackservice.findGeoTop(this.countrySearch).subscribe(
+        (data : Track[]) => { 
+          console.log("DataLen: " + data.length);
+          console.log("Data: " + data.values);
+          this.tracks = data
+          this.tracks.forEach(function(value) {
+            console.log(value);
+          })
+          
+        }, error => {
+          console.log(error);
+        });
+    }else if(isValid(this.songSearch) && isValid(this.artistSearch)){
       console.log("song and artist true");
       this.Trackservice.findAllTrack(this.songSearch,this.artistSearch).subscribe(
         (data : Track[]) => { 
